@@ -24,6 +24,7 @@
 #include "misc/utils.h"
 #include "game/EntityFunctionTemplates.h"
 #include "Raven_Bot.h"
+#include "Raven_Teammate.h"
 #include "navigation/pathmanager.h"
 
 
@@ -94,6 +95,7 @@ public:
   bool LoadMap(const std::string& FileName); 
 
   void AddBots(unsigned int NumBotsToAdd);
+  void AddTeammates(unsigned int NumTeammatesToAdd);
   void AddRocket(Raven_Bot* shooter, Vector2D target);
   void AddRailGunSlug(Raven_Bot* shooter, Vector2D target);
   void AddShotGunPellet(Raven_Bot* shooter, Vector2D target);
@@ -101,6 +103,7 @@ public:
 
   //removes the last bot to be added
   void RemoveBot();
+  void RemoveTeammate();
 
   //returns true if a bot of size BoundingRadius cannot move from A to B
   //without bumping into world geometry

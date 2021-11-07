@@ -30,7 +30,11 @@
 
 //uncomment to write object creation/deletion to debug console
 //#define  LOG_CREATIONAL_STUFF
+#ifdef LOG_CREATIONAL_STUFF
+#include "misc/Stream_Utility_Functions.h"
+#endif // LOG_CREATIONAL_STUFF
 
+#include "debug/DebugConsole.h"
 
 //----------------------------- ctor ------------------------------------------
 //-----------------------------------------------------------------------------
@@ -268,6 +272,41 @@ void Raven_Game::AddBots(unsigned int NumBotsToAdd)
   }
 }
 
+//-------------------------- AddTeammates --------------------------------------
+//
+//  Adds a teammate and switches on the default steering behavior
+//-----------------------------------------------------------------------------
+void Raven_Game::AddTeammates(unsigned int NumTeammatesToAdd)
+{
+    if (m_pSelectedBot)
+    {
+        while (NumTeammatesToAdd--)
+        {
+            //create a teammate. (its position is irrelevant at this point because it will
+            //not be rendered until it is spawned)
+            Raven_Bot* rb = new Raven_Teammate(this, Vector2D(), m_pSelectedBot);
+
+            //switch the default steering behaviors on
+            rb->GetSteering()->WallAvoidanceOn();
+            rb->GetSteering()->SeparationOn();
+
+            m_Bots.push_back(rb);
+
+            //register the bot with the entity manager
+            EntityMgr->RegisterEntity(rb);
+
+
+#ifdef LOG_CREATIONAL_STUFF
+            debug_con << "Adding teammate with ID " << ttos(rb->ID()) << "";
+#endif
+        }
+    }
+    else
+    {
+        debug_con << "Failed to add teammate. You need to have selected a leader first." << "";
+    }
+}
+
 //---------------------------- NotifyAllBotsOfRemoval -------------------------
 //
 //  when a bot is removed from the game by a user all remianing bots
@@ -294,6 +333,15 @@ void Raven_Game::NotifyAllBotsOfRemoval(Raven_Bot* pRemovedBot)const
 void Raven_Game::RemoveBot()
 {
   m_bRemoveABot = true;
+}
+
+//-------------------------------RemoveTeammate ------------------------------------
+//
+//  removes the last teammate to be added from the game
+//-----------------------------------------------------------------------------
+void Raven_Game::RemoveTeammate()
+{
+    //TODO
 }
 
 //--------------------------- AddBolt -----------------------------------------
@@ -444,7 +492,7 @@ void Raven_Game::ClickRightMouseButton(POINTS p)
 
   //if the user clicks on a selected bot twice it becomes possessed(under
   //the player's control)
-  if (pBot && pBot == m_pSelectedBot)
+  if (pBot && pBot == m_pSelectedBot && pBot->isLeader())
   {
     m_pSelectedBot->TakePossession();
 

@@ -33,6 +33,8 @@ BEGIN
         MENUITEM "Load Map",                    IDM_GAME_LOAD
         MENUITEM "Add Bot [ csr up ]",          IDM_GAME_ADDBOT
         MENUITEM "Remove Bot [ csr down ]",     IDM_GAME_REMOVEBOT
+        MENUITEM "Add Teammate [ TODO ]",       IDM_GAME_ADDTEAMMATE
+        MENUITEM "Remove Teammate [ TODO ]",    IDM_GAME_REMOVETEAMMATE
         MENUITEM "Toggle Pause [ 'P' ]",        IDM_GAME_PAUSE
     END
     POPUP "Navigation"

@@ -63,7 +63,14 @@ void Goal_Think::Activate()
 {
   if (!m_pOwner->isPossessed())
   {
-    Arbitrate();
+      if (m_pOwner->isLeader())
+      {
+          Arbitrate();
+      }
+      else
+      {
+          // TODO
+      }
   }
 
   m_iStatus = active;
