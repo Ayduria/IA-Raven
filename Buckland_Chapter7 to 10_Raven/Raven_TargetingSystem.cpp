@@ -28,28 +28,28 @@ void Raven_TargetingSystem::Update()
   std::list<Raven_Bot*>::const_iterator curBot = SensedBots.begin();
   for (curBot; curBot != SensedBots.end(); ++curBot)
   {
-    if ((*curBot != m_pOwner))
-    {
-      bool isTeammate = false;
-      if (m_pOwner->isLeader()) 
-      {
-        if (!(*curBot)->isLeader())
-        {
-          isTeammate = ((Raven_Teammate*)*curBot)->GetLeader() == m_pOwner;
-        }
-      }
-      else 
-      { 
-        if ((*curBot)->isLeader())
-        {
-          isTeammate = ((Raven_Teammate*)m_pOwner)->GetLeader() == *curBot;
-        }
-        else 
-        {
-          isTeammate = ((Raven_Teammate*)*curBot)->GetLeader() == ((Raven_Teammate*)m_pOwner)->GetLeader();
-        }
-      }
-
+    if ((*curBot != m_pOwner))
+    {
+      bool isTeammate = false;
+      if (m_pOwner->isLeader()) 
+      {
+        if (!(*curBot)->isLeader())
+        {
+          isTeammate = ((Raven_Teammate*)*curBot)->GetLeader() == m_pOwner;
+        }
+      }
+      else 
+      { 
+        if ((*curBot)->isLeader())
+        {
+          isTeammate = ((Raven_Teammate*)m_pOwner)->GetLeader() == *curBot;
+        }
+        else 
+        {
+          isTeammate = ((Raven_Teammate*)*curBot)->GetLeader() == ((Raven_Teammate*)m_pOwner)->GetLeader();
+        }
+      }
+
       if ((*curBot)->isAlive() && !isTeammate)
       {
         double dist = Vec2DDistanceSq((*curBot)->Pos(), m_pOwner->Pos());
@@ -59,7 +59,7 @@ void Raven_TargetingSystem::Update()
           ClosestDistSoFar = dist;
           m_pCurrentTarget = *curBot;
         }
-      }
+      }
     }
     //make sure the bot is alive and that it is not the owner
   }
