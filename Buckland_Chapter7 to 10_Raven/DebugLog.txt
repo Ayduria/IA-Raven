@@ -1,0 +1,102 @@
+NavGraph for maps/Raven_DM1.map loaded okay
+Average edge length is 23.7036
+Neighborhood range set to 24.7036
+Partitioning navgraph nodes...
+Loading map...
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Spawn Point
+Creating a Spawn Point
+Creating a Spawn Point
+Creating a Health
+Creating a Health
+Creating a Health
+Creating a rocket_launcher
+Creating a Railgun
+Creating a shotgun
+Creating a shotgun
+Creating a rocket_launcher
+maps/Raven_DM1.map loaded okay
+BOT 401 IS STUCK!!
+BOT 402 IS STUCK!!
+BOT 403 IS STUCK!!
+BOT 441 IS STUCK!!
+BOT 440 IS STUCK!!
+BOT 402 IS STUCK!!
+BOT 441 IS STUCK!!
+BOT 428 IS STUCK!!
+BOT 443 IS STUCK!!
+BOT 403 IS STUCK!!
+BOT 403 IS STUCK!!
+BOT 427 IS STUCK!!
+BOT 441 IS STUCK!!
+deleting raven bot (id = 401)
+deleting raven bot (id = 402)
+deleting raven bot (id = 403)
+deleting raven bot (id = 426)
+deleting raven bot (id = 427)
+deleting raven bot (id = 428)
+deleting raven bot (id = 440)
+deleting raven bot (id = 441)
+deleting raven bot (id = 442)
+deleting raven bot (id = 443)
+deleting raven bot (id = 1107)
+deleting raven bot (id = 1112)
+deleting raven bot (id = 1115)
+deleting raven bot (id = 1118)

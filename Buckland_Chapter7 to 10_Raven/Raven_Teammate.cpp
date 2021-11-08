@@ -50,17 +50,14 @@ void Raven_Teammate::Spawn(Vector2D pos)
 //
 void Raven_Teammate::Update()
 {
-    //process the currently active goal. Note this is required even if the bot
-    //is under user control. This is because a goal is created whenever a user 
-    //clicks on an area of the map that necessitates a path planning request.
-    m_pBrain->Process();
+    Raven_Bot::Update();
 
-    //Calculate the steering force and update the bot's velocity and position
-    UpdateMovement();
 
-    //this method aims the bot's current weapon at the current target
-    //and takes a shot if a shot is possible
-    m_pWeaponSys->TakeAimAndShoot();
+}
+
+Raven_Bot* Raven_Teammate::GetLeader() 
+{
+    return m_leader;
 }
 
 //------------------------------- Exorcise ------------------------------------
@@ -97,7 +94,7 @@ void Raven_Teammate::Render()
     gdi->ClosedShape(m_vecBotVBTrans);
 
     //draw the head
-    gdi->GreenBrush();
+    gdi->LightBlueBrush();
     gdi->Circle(Pos(), 6.0 * Scale().x);
 
 

@@ -48,6 +48,8 @@ public:
 
 	//spawns the bot at the given position
 	void Spawn(Vector2D pos) override;
+
+	Raven_Bot* GetLeader();
 };
 
 #endif

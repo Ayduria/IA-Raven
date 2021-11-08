@@ -286,6 +286,8 @@ void Raven_Game::AddTeammates(unsigned int NumTeammatesToAdd)
             //not be rendered until it is spawned)
             Raven_Bot* rb = new Raven_Teammate(this, Vector2D(), m_pSelectedBot);
 
+            m_pSelectedBot->AddTeammate(rb->ID());
+
             //switch the default steering behaviors on
             rb->GetSteering()->WallAvoidanceOn();
             rb->GetSteering()->SeparationOn();

@@ -377,6 +377,11 @@ void Raven_Bot::ChangeWeapon(unsigned int type)
   m_pWeaponSys->ChangeWeapon(type);
 }
   
+//----------------------- AddTeammate -----------------------------------------
+void Raven_Bot::AddTeammate(int Id) 
+{
+    m_teammatesID.push_back(Id);
+}
 
 //---------------------------- FireWeapon -------------------------------------
 //
@@ -497,7 +502,14 @@ void Raven_Bot::Render()
   gdi->ClosedShape(m_vecBotVBTrans);
   
   //draw the head
-  gdi->BrownBrush();
+  if (m_teammatesID.size() == 0)
+  {
+    gdi->BrownBrush();
+  }
+  else
+  {
+    gdi->BlueBrush();
+  }
   gdi->Circle(Pos(), 6.0 * Scale().x);
 
 

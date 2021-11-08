@@ -108,6 +108,9 @@ protected:
   //set to true to make the bot a leader
   bool								 m_bLeader = true;
 
+  //Vector of Teammates ID
+  std::vector<int>					m_teammatesID;
+
   //a vertex buffer containing the bot's geometry
   std::vector<Vector2D>              m_vecBotVB;
   //the buffer for the transformed vertices
@@ -172,7 +175,9 @@ public:
   //returns true if the bot is close to the given position
   bool          isAtPosition(Vector2D pos)const;
 
-
+  // Add teammate
+  void AddTeammate(int Id);
+  
   //interface for human player
   void          FireWeapon(Vector2D pos);
   void          ChangeWeapon(unsigned int type);
