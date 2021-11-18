@@ -15,6 +15,10 @@ std::string GoalTypeToString::Convert(int gt)
 
     return "explore";
 
+  case goal_thinkteammate:
+
+     return "thinkteammate";
+
   case goal_think:
 
     return "think";

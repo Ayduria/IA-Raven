@@ -137,7 +137,7 @@ public:
   //the usual suspects
   virtual void Render();
   virtual void Update();
-  bool         HandleMessage(const Telegram& msg);
+  virtual bool HandleMessage(const Telegram& msg);
   void         Write(std::ostream&  os)const{/*not implemented*/}
   void         Read (std::ifstream& is){/*not implemented*/}
 
@@ -177,6 +177,9 @@ public:
 
   // Add teammate
   void AddTeammate(int Id);
+
+  // Get teammates
+  std::vector<int> GetTeammatesIDs();
   
   //interface for human player
   void          FireWeapon(Vector2D pos);

@@ -70,7 +70,7 @@ Raven_Bot::Raven_Bot(Raven_Game* world,Vector2D pos):
   m_pVisionUpdateRegulator = new Regulator(script->GetDouble("Bot_VisionUpdateFreq"));
 
   //create the goal queue
-  m_pBrain = new Goal_Think(this);
+  m_pBrain = new Goal_Think(this, goal_think);
 
   //create the targeting system
   m_pTargSys = new Raven_TargetingSystem(this);
@@ -381,6 +381,12 @@ void Raven_Bot::ChangeWeapon(unsigned int type)
 void Raven_Bot::AddTeammate(int Id) 
 {
     m_teammatesID.push_back(Id);
+}
+
+//----------------------- GetTeammatesIDs -------------------------------------
+std::vector<int> Raven_Bot::GetTeammatesIDs()
+{
+    return m_teammatesID;
 }
 
 //---------------------------- FireWeapon -------------------------------------

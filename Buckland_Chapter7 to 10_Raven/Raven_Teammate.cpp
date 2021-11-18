@@ -17,7 +17,7 @@
 #include "Messaging/MessageDispatcher.h"
 
 #include "goals/Raven_Goal_Types.h"
-#include "goals/Goal_Think.h"
+#include "Goal_ThinkTeammate.h"
 
 
 #include "Debug/DebugConsole.h"
@@ -29,6 +29,7 @@ Raven_Teammate::Raven_Teammate(Raven_Game* world, Vector2D pos, Raven_Bot* leade
 {
     m_bLeader = false;
     m_leader = leader;
+    m_pBrain = new Goal_ThinkTeammate(this, goal_thinkteammate);
 }
 
 //------------------------------- Spawn ---------------------------------------
@@ -53,6 +54,32 @@ void Raven_Teammate::Update()
     Raven_Bot::Update();
 
 
+}
+
+//-------------------------------- HandleMessage -------------------------------------
+//
+bool Raven_Teammate::HandleMessage(const Telegram& msg)
+{
+    if (Raven_Bot::HandleMessage(msg))
+    {
+        return true;
+    }
+
+    //handle any messages not handles by the goals
+    switch (msg.Msg)
+    {
+    case Msg_YoTeamINeedHelp:
+    {
+        MemorySlice* slice = (MemorySlice*)msg.ExtraInfo;
+        m_pSensoryMem->UpdateBotFromMemory(slice);
+        m_pTargSys->SetTarget(slice->opponent);
+        m_bIsTargetFromTeam = true;
+        GetBrain()->AddGoal_AttackTarget();
+        return true;
+    }
+
+    default: return false;
+    }
 }
 
 Raven_Bot* Raven_Teammate::GetLeader() 
@@ -131,4 +158,14 @@ void Raven_Teammate::Render()
     {
         gdi->TextAtPos(Pos().x - 40, Pos().y + 10, "Scr:" + std::to_string(Score()));
     }
+}
+
+bool Raven_Teammate::IsTargetFromTeam()
+{
+    return m_bIsTargetFromTeam;
+}
+
+void Raven_Teammate::ClearTargetFromTeam()
+{
+    m_bIsTargetFromTeam = false;
 }

@@ -3,9 +3,9 @@
 #include "Goal_HuntTarget.h"
 #include "Goal_DodgeSideToSide.h"
 #include "../Raven_Bot.h"
-
-
-
+#include "../Raven_Messages.h"
+#include "Messaging/MessageDispatcher.h"
+#include "../Raven_SensoryMemory.h"
 
 
 
@@ -27,6 +27,28 @@ void Goal_AttackTarget::Activate()
 
      return;
   }
+
+  // Send message to teammates if leader
+  /*if (m_pOwner->isLeader())
+  {
+      std::vector<int> teammatesIDs = m_pOwner->GetTeammatesIDs();
+      if (teammatesIDs.size() > 0)
+      {
+          Raven_Bot* target = m_pOwner->GetTargetSys()->GetTarget();
+          if (target != m_pOwner)
+          {
+              MemorySlice* slice = m_pOwner->GetSensoryMem()->GetMemorySliceOfOpponent(target);
+              for (size_t i = 0; i < teammatesIDs.size(); i++)
+              {
+                  Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+                      m_pOwner->ID(),
+                      teammatesIDs[i],
+                      Msg_YoTeamINeedHelp,
+                      (void*)slice);
+              }
+          }
+      }
+  }*/
 
   //if the bot is able to shoot the target (there is LOS between bot and
   //target), then select a tactic to follow while shooting

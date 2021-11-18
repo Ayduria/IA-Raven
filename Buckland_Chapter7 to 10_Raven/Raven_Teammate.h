@@ -35,6 +35,7 @@ class Raven_Teammate : public Raven_Bot
 {
 private:
 	Raven_Bot* m_leader;
+	bool	   m_bIsTargetFromTeam;
 
 public:
 	Raven_Teammate(Raven_Game* world, Vector2D pos, Raven_Bot* leader);
@@ -42,12 +43,18 @@ public:
 	//the usual suspects
 	void Render() override;
 	void Update() override;
+	bool HandleMessage(const Telegram& msg) override;
 
 	//interface for human player
 	void Exorcise() override;
 
 	//spawns the bot at the given position
 	void Spawn(Vector2D pos) override;
+
+	//check if current target is from team
+	bool IsTargetFromTeam();
+
+	void ClearTargetFromTeam();
 
 	Raven_Bot* GetLeader();
 };

@@ -29,7 +29,7 @@
 
 
 //uncomment to write object creation/deletion to debug console
-//#define  LOG_CREATIONAL_STUFF
+#define  LOG_CREATIONAL_STUFF
 #ifdef LOG_CREATIONAL_STUFF
 #include "misc/Stream_Utility_Functions.h"
 #endif // LOG_CREATIONAL_STUFF

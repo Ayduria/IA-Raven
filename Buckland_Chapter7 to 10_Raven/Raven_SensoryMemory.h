@@ -57,6 +57,13 @@ public:
 };
 
 
+class MemorySlice
+{
+public:
+    MemoryRecord    memoryRecord;
+    Raven_Bot*      opponent;
+};
+
 
 class Raven_SensoryMemory
 {
@@ -94,6 +101,7 @@ public:
 
   //this removes a bot's record from memory
   void     RemoveBotFromMemory(Raven_Bot* pBot);
+  void     UpdateBotFromMemory(MemorySlice* slice);
 
   //this method iterates through all the opponents in the game world and 
   //updates the records of those that are in the owner's FOV
@@ -105,6 +113,8 @@ public:
   double    GetTimeOpponentHasBeenVisible(Raven_Bot* pOpponent)const;
   double    GetTimeSinceLastSensed(Raven_Bot* pOpponent)const;
   double    GetTimeOpponentHasBeenOutOfView(Raven_Bot* pOpponent)const;
+
+  MemorySlice* GetMemorySliceOfOpponent(Raven_Bot* pOpponent)const;
 
   //this method returns a list of all the opponents that have had their
   //records updated within the last m_dMemorySpan seconds.
