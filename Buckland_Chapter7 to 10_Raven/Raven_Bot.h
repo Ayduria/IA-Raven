@@ -43,6 +43,9 @@ protected:
   //alive, dead or spawning?
   Status                             m_Status;
 
+  //Head color
+  int								 m_HeadColor;
+
   //a pointer to the world data
   Raven_Game*                        m_pWorld;
 
@@ -108,6 +111,8 @@ protected:
   //set to true to make the bot a leader
   bool								 m_bLeader = true;
 
+  double							 m_customScale;
+
   //Vector of Teammates ID
   std::vector<int>					m_teammatesID;
 
@@ -128,10 +133,12 @@ protected:
   //initializes the bot's VB with its geometry
   void          SetUpVertexBuffer();
 
+  void			SetHeadBrushColor();
+
 
 public:
   
-  Raven_Bot(Raven_Game* world, Vector2D pos);
+  Raven_Bot(Raven_Game* world, Vector2D pos, double customScale, int customColor);
   virtual ~Raven_Bot();
 
   //the usual suspects
@@ -177,6 +184,11 @@ public:
 
   // Add teammate
   void AddTeammate(int Id);
+  // Remove teammate
+  void RemoveTeammate(int Id);
+
+  // Get Head color
+  int GetHeadColor() { return m_HeadColor; }
 
   // Get teammates
   std::vector<int> GetTeammatesIDs();

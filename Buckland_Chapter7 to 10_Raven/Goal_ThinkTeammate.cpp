@@ -45,14 +45,3 @@ Goal_ThinkTeammate::Goal_ThinkTeammate(Raven_Bot* pBot, int goalType): Goal_Thin
     m_Evaluators.push_back(new GetWeaponGoal_Evaluator(RocketLauncherBias,
         type_rocket_launcher));
 }
-
-//----------------------------- dtor ------------------------------------------
-//-----------------------------------------------------------------------------
-Goal_ThinkTeammate::~Goal_ThinkTeammate()
-{
-    GoalEvaluators::iterator curDes = m_Evaluators.begin();
-    for (curDes; curDes != m_Evaluators.end(); ++curDes)
-    {
-        delete* curDes;
-    }
-}

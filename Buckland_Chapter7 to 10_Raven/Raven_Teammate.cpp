@@ -24,13 +24,14 @@
 
 //-------------------------- ctor ---------------------------------------------
 Raven_Teammate::Raven_Teammate(Raven_Game* world, Vector2D pos, Raven_Bot* leader) :
-
-    Raven_Bot(world, pos)
+    Raven_Bot(world, pos, script->GetDouble("Bot_Scale"), leader->GetHeadColor())
 {
     m_bLeader = false;
     m_leader = leader;
     m_pBrain = new Goal_ThinkTeammate(this, goal_thinkteammate);
+    m_bIsTargetFromTeam = false;
 }
+
 
 //------------------------------- Spawn ---------------------------------------
 //
@@ -94,70 +95,6 @@ Raven_Bot* Raven_Teammate::GetLeader()
 void Raven_Teammate::Exorcise()
 {
     // Empty since we will never pocess a teammate.
-}
-
-//--------------------------- Render -------------------------------------
-//
-//------------------------------------------------------------------------
-void Raven_Teammate::Render()
-{
-    //when a bot is hit by a projectile this value is set to a constant user
-    //defined value which dictates how long the bot should have a thick red
-    //circle drawn around it (to indicate it's been hit) The circle is drawn
-    //as long as this value is positive. (see Render)
-    m_iNumUpdatesHitPersistant--;
-
-
-    if (isDead() || isSpawning()) return;
-
-    gdi->BluePen();
-
-    m_vecBotVBTrans = WorldTransform(m_vecBotVB,
-        Pos(),
-        Facing(),
-        Facing().Perp(),
-        Scale());
-
-    gdi->ClosedShape(m_vecBotVBTrans);
-
-    //draw the head
-    gdi->LightBlueBrush();
-    gdi->Circle(Pos(), 6.0 * Scale().x);
-
-
-    //render the bot's weapon
-    m_pWeaponSys->RenderCurrentWeapon();
-
-    //render a thick red circle if the bot gets hit by a weapon
-    if (m_bHit)
-    {
-        gdi->ThickRedPen();
-        gdi->HollowBrush();
-        gdi->Circle(m_vPosition, BRadius() + 1);
-
-        if (m_iNumUpdatesHitPersistant <= 0)
-        {
-            m_bHit = false;
-        }
-    }
-
-    gdi->TransparentText();
-    gdi->TextColor(0, 255, 0);
-
-    if (UserOptions->m_bShowBotIDs)
-    {
-        gdi->TextAtPos(Pos().x - 10, Pos().y - 20, std::to_string(ID()));
-    }
-
-    if (UserOptions->m_bShowBotHealth)
-    {
-        gdi->TextAtPos(Pos().x - 40, Pos().y - 5, "H:" + std::to_string(Health()));
-    }
-
-    if (UserOptions->m_bShowScore)
-    {
-        gdi->TextAtPos(Pos().x - 40, Pos().y + 10, "Scr:" + std::to_string(Score()));
-    }
 }
 
 bool Raven_Teammate::IsTargetFromTeam()

@@ -179,7 +179,7 @@ LRESULT CALLBACK WindowProc (HWND   hwnd,
 
          case VK_SUBTRACT:
 
-             //TODO
+             g_pRaven->RemoveTeammate();
 
              break;
         }
@@ -242,7 +242,7 @@ LRESULT CALLBACK WindowProc (HWND   hwnd,
 
       case IDM_GAME_REMOVETEAMMATE:
 
-          //TODO
+          g_pRaven->RemoveTeammate();
 
           break;
 

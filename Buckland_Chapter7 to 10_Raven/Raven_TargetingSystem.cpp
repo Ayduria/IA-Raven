@@ -19,12 +19,6 @@ Raven_TargetingSystem::Raven_TargetingSystem(Raven_Bot* owner):m_pOwner(owner),
 //-----------------------------------------------------------------------------
 void Raven_TargetingSystem::Update()
 {
-    /// <summary>
-    /// TODO: RECHECK PSQ LES TEAMMTATES DEVRAIT PAS VRM IGNORE LEURS ALENTOUR
-    /// 
-    /// - Envoie le message Msg_YoTeamINeedHelp quand on controle le joueur
-    /// - Drop weapon et envoie au teammate la position
-    /// </summary>
     bool ignoreTargetingSystem = false;
     if (!m_pOwner->isLeader())
     {
@@ -45,7 +39,7 @@ void Raven_TargetingSystem::Update()
             }
         }
     }
-
+    
     int oldTargetId = 0;
     if (m_pCurrentTarget)
     {
@@ -125,9 +119,6 @@ void Raven_TargetingSystem::Update()
         }
     }
 }
-
-
-
 
 bool Raven_TargetingSystem::isTargetWithinFOV()const
 {
