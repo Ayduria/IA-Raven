@@ -75,13 +75,6 @@ Creating a shotgun
 Creating a shotgun
 Creating a rocket_launcher
 maps/Raven_DM1.map loaded okay
-<<<<<<< Updated upstream
-BOT 402 IS STUCK!!
-BOT 403 IS STUCK!!
-BOT 402 IS STUCK!!
-BOT 405 IS STUCK!!
-BOT 403 IS STUCK!!
-=======
 Adding bot with ID 401
 Adding bot with ID 402
 Adding bot with ID 403
@@ -146,16 +139,8 @@ Adding a rail gun slug475 at pos  198.277 297.242
 
 ------------------------------ Clearup -------------------------------
 deleting entity id: 401 of type bot(1)
->>>>>>> Stashed changes
 deleting raven bot (id = 401)
 deleting entity id: 402 of type bot(1)
 deleting raven bot (id = 402)
 deleting entity id: 403 of type bot(1)
 deleting raven bot (id = 403)
-<<<<<<< Updated upstream
-deleting raven bot (id = 404)
-deleting raven bot (id = 405)
-deleting raven bot (id = 408)
-deleting raven bot (id = 422)
-=======
->>>>>>> Stashed changes
