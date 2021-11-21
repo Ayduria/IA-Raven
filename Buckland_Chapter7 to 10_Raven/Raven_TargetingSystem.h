@@ -64,6 +64,9 @@ public:
   //returns a pointer to the target. null if no target current.
   Raven_Bot* GetTarget()const{return m_pCurrentTarget;}
 
+  //sets the target
+  void		 SetTarget(Raven_Bot* target) { m_pCurrentTarget = target; }
+
   //sets the target pointer to null
   void       ClearTarget(){m_pCurrentTarget=0;}
 };

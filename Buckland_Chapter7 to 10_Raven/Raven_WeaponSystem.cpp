@@ -175,7 +175,6 @@ void  Raven_WeaponSystem::AddWeapon(unsigned int weapon_type)
     w = new RocketLauncher(m_pOwner); break;
 
   }//end switch
-  
 
   //if the bot already holds a weapon of this type, just add its ammo
   Raven_Weapon* present = GetWeaponFromInventory(weapon_type);
@@ -192,6 +191,45 @@ void  Raven_WeaponSystem::AddWeapon(unsigned int weapon_type)
   {
     m_WeaponMap[weapon_type] = w;
   }
+}
+
+void Raven_WeaponSystem::AddWeapon(WeaponData* weapon) 
+{
+    Raven_Weapon* w = 0;
+
+    switch (weapon->weaponType)
+    {
+    case type_rail_gun:
+
+        w = new RailGun(m_pOwner); break;
+
+    case type_shotgun:
+
+        w = new ShotGun(m_pOwner); break;
+
+    case type_rocket_launcher:
+
+        w = new RocketLauncher(m_pOwner); break;
+
+    }//end switch
+
+    w->SetRoundsLeft(weapon->ammoLeft);
+
+    //if the bot already holds a weapon of this type, just add its ammo
+    Raven_Weapon* present = GetWeaponFromInventory(weapon->weaponType);
+
+    if (present)
+    {
+        present->IncrementRounds(weapon->ammoLeft);
+
+        delete w;
+    }
+
+    //if not already holding, add to inventory
+    else
+    {
+        m_WeaponMap[weapon->weaponType] = w;
+    }
 }
 
 

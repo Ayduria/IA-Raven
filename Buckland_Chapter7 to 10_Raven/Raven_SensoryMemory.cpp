@@ -37,6 +37,52 @@ void Raven_SensoryMemory::RemoveBotFromMemory(Raven_Bot* pBot)
     m_MemoryMap.erase(record);
   }
 }
+
+//------------------------ UpdateBotFromMemory --------------------------------
+//
+//  Update the memory record of the bot
+//-----------------------------------------------------------------------------
+void Raven_SensoryMemory::UpdateBotFromMemory(MemorySlice* slice)
+{
+    MakeNewRecordIfNotAlreadyPresent(slice->opponent);
+
+    //get a reference to this bot's data
+    MemoryRecord& info = m_MemoryMap[slice->opponent];
+
+    info = slice->memoryRecord;
+
+    //test if there is LOS between bots 
+    if (m_pOwner->GetWorld()->isLOSOkay(m_pOwner->Pos(), slice->opponent->Pos()))
+    {
+        info.bShootable = true;
+
+        //test if the bot is within FOV
+        if (isSecondInFOVOfFirst(m_pOwner->Pos(),
+            m_pOwner->Facing(),
+            slice->opponent->Pos(),
+            m_pOwner->FieldOfView()))
+        {
+            info.fTimeLastSensed = Clock->GetCurrentTime();
+            info.vLastSensedPosition = slice->opponent->Pos();
+            info.fTimeLastVisible = Clock->GetCurrentTime();
+
+            if (info.bWithinFOV == false)
+            {
+                info.bWithinFOV = true;
+                info.fTimeBecameVisible = info.fTimeLastSensed;
+            }
+        }
+        else
+        {
+            info.bWithinFOV = false;
+        }
+    }
+    else
+    {
+        info.bShootable = false;
+        info.bWithinFOV = false;
+    }
+}
   
 //----------------------- UpdateWithSoundSource -------------------------------
 //
@@ -256,6 +302,24 @@ double  Raven_SensoryMemory::GetTimeSinceLastSensed(Raven_Bot* pOpponent)const
   }
 
   return 0;
+}
+
+//------------------------ GetMemoryRecord ----------------------
+//
+//  returns the last memory record of the opponent
+//-----------------------------------------------------------------------------
+MemorySlice* Raven_SensoryMemory::GetMemorySliceOfOpponent(Raven_Bot * pOpponent)const
+{
+    MemorySlice* slice = new MemorySlice();
+
+    MemoryMap::const_iterator it = m_MemoryMap.find(pOpponent);
+    if (it != m_MemoryMap.end())
+    {
+        slice->opponent = it->first;
+        slice->memoryRecord = it->second;
+    }
+
+    return slice;
 }
 
 //---------------------- RenderBoxesAroundRecentlySensed ----------------------

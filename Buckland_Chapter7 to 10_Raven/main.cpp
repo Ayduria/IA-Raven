@@ -162,6 +162,10 @@ LRESULT CALLBACK WindowProc (HWND   hwnd,
 
            break;
 
+         case 'K':
+
+           g_pRaven->KillSelectedBot();
+           break;
 
          case VK_UP:
 
@@ -171,7 +175,17 @@ LRESULT CALLBACK WindowProc (HWND   hwnd,
 
            g_pRaven->RemoveBot(); break;
            
+         case VK_ADD:
 
+             g_pRaven->AddTeammates(1);
+
+             break;
+
+         case VK_SUBTRACT:
+
+             g_pRaven->RemoveTeammate();
+
+             break;
         }
       }
 
@@ -221,6 +235,18 @@ LRESULT CALLBACK WindowProc (HWND   hwnd,
       case IDM_GAME_REMOVEBOT:
           
           g_pRaven->RemoveBot();
+
+          break;
+
+      case IDM_GAME_ADDTEAMMATE:
+
+          g_pRaven->AddTeammates(1);
+
+          break;
+
+      case IDM_GAME_REMOVETEAMMATE:
+
+          g_pRaven->RemoveTeammate();
 
           break;
 

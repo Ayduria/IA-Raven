@@ -19,7 +19,7 @@
 #include "AttackTargetGoal_Evaluator.h"
 
 
-Goal_Think::Goal_Think(Raven_Bot* pBot):Goal_Composite<Raven_Bot>(pBot, goal_think)
+Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(pBot, goalType)
 {
   
   //these biases could be loaded in from a script on a per bot basis

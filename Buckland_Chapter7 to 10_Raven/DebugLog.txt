@@ -1,3 +1,5 @@
+
+------------------------------ Clearup -------------------------------
 NavGraph for maps/Raven_DM1.map loaded okay
 Average edge length is 23.7036
 Neighborhood range set to 24.7036
@@ -73,15 +75,87 @@ Creating a shotgun
 Creating a shotgun
 Creating a rocket_launcher
 maps/Raven_DM1.map loaded okay
+<<<<<<< Updated upstream
 BOT 402 IS STUCK!!
 BOT 403 IS STUCK!!
 BOT 402 IS STUCK!!
 BOT 405 IS STUCK!!
 BOT 403 IS STUCK!!
+=======
+Adding bot with ID 401
+Adding bot with ID 402
+Adding bot with ID 403
+Adding a shotgun shell 404 at pos  355.697 315.834
+Adding a shotgun shell 405 at pos  355.697 315.834
+Adding a shotgun shell 406 at pos  355.697 315.834
+Adding a shotgun shell 407 at pos  355.697 315.834
+Adding a shotgun shell 408 at pos  355.697 315.834
+Adding a shotgun shell 409 at pos  355.697 315.834
+Adding a shotgun shell 410 at pos  355.697 315.834
+Adding a shotgun shell 411 at pos  355.697 315.834
+Adding a shotgun shell 412 at pos  355.697 315.834
+Adding a shotgun shell 413 at pos  355.697 315.834
+Adding a rocket 415 at pos  63.0144 352.879
+Player Possesses bot 402
+BOT 403 IS STUCK!!
+Adding a rocket 418 at pos  33.1685 204.529
+Adding a shotgun shell 420 at pos  317.616 112.789
+Adding a shotgun shell 421 at pos  317.616 112.789
+Adding a shotgun shell 422 at pos  317.616 112.789
+Adding a shotgun shell 423 at pos  317.616 112.789
+Adding a shotgun shell 424 at pos  317.616 112.789
+Adding a shotgun shell 425 at pos  317.616 112.789
+Adding a shotgun shell 426 at pos  317.616 112.789
+Adding a shotgun shell 427 at pos  317.616 112.789
+Adding a shotgun shell 428 at pos  317.616 112.789
+Adding a shotgun shell 429 at pos  317.616 112.789
+Adding a shotgun shell 431 at pos  287.921 136.853
+Adding a shotgun shell 432 at pos  287.921 136.853
+Adding a shotgun shell 433 at pos  287.921 136.853
+Adding a shotgun shell 434 at pos  287.921 136.853
+Adding a shotgun shell 435 at pos  287.921 136.853
+Adding a shotgun shell 436 at pos  287.921 136.853
+Adding a shotgun shell 437 at pos  287.921 136.853
+Adding a shotgun shell 438 at pos  287.921 136.853
+Adding a shotgun shell 439 at pos  287.921 136.853
+Adding a shotgun shell 440 at pos  287.921 136.853
+Adding a bolt 442 at pos  182.648 262.261
+Player is exorcised from bot 402
+Adding a bolt 444 at pos  193.184 254.785
+Player Possesses bot 403
+Adding a bolt 446 at pos  183.093 248.35
+Adding a bolt 448 at pos  172.798 240.829
+Adding a rail gun slug450 at pos  108.721 382.106
+Adding a rocket 452 at pos  125.13 396.714
+Adding a rocket 454 at pos  106.129 386.039
+Adding a rail gun slug456 at pos  117.98 375.312
+Adding a rail gun slug458 at pos  131.463 385.748
+Adding a rail gun slug460 at pos  137.19 345.934
+Adding a rail gun slug462 at pos  146.577 357.985
+Adding a shotgun shell 464 at pos  138.469 79.5491
+Adding a shotgun shell 465 at pos  138.469 79.5491
+Adding a shotgun shell 466 at pos  138.469 79.5491
+Adding a shotgun shell 467 at pos  138.469 79.5491
+Adding a shotgun shell 468 at pos  138.469 79.5491
+Adding a shotgun shell 469 at pos  138.469 79.5491
+Adding a shotgun shell 470 at pos  138.469 79.5491
+Adding a shotgun shell 471 at pos  138.469 79.5491
+Adding a shotgun shell 472 at pos  138.469 79.5491
+Adding a shotgun shell 473 at pos  138.469 79.5491
+Adding a rail gun slug475 at pos  198.277 297.242
+
+------------------------------ Clearup -------------------------------
+deleting entity id: 401 of type bot(1)
+>>>>>>> Stashed changes
 deleting raven bot (id = 401)
+deleting entity id: 402 of type bot(1)
 deleting raven bot (id = 402)
+deleting entity id: 403 of type bot(1)
 deleting raven bot (id = 403)
+<<<<<<< Updated upstream
 deleting raven bot (id = 404)
 deleting raven bot (id = 405)
 deleting raven bot (id = 408)
 deleting raven bot (id = 422)
+=======
+>>>>>>> Stashed changes

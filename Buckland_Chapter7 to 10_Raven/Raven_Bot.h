@@ -38,10 +38,13 @@ private:
 
   enum Status{alive, dead, spawning};
 
-private:
+protected:
 
   //alive, dead or spawning?
   Status                             m_Status;
+
+  //Head color
+  int								 m_HeadColor;
 
   //a pointer to the world data
   Raven_Game*                        m_pWorld;
@@ -105,6 +108,14 @@ private:
   //set to true when a human player takes over control of the bot
   bool                               m_bPossessed;
 
+  //set to true to make the bot a leader
+  bool								 m_bLeader = true;
+
+  double							 m_customScale;
+
+  //Vector of Teammates ID
+  std::vector<int>					m_teammatesID;
+
   //a vertex buffer containing the bot's geometry
   std::vector<Vector2D>              m_vecBotVB;
   //the buffer for the transformed vertices
@@ -122,16 +133,18 @@ private:
   //initializes the bot's VB with its geometry
   void          SetUpVertexBuffer();
 
+  void			SetHeadBrushColor();
+
 
 public:
   
-  Raven_Bot(Raven_Game* world, Vector2D pos);
+  Raven_Bot(Raven_Game* world, Vector2D pos, double customScale, int customColor);
   virtual ~Raven_Bot();
 
   //the usual suspects
-  void         Render();
-  void         Update();
-  bool         HandleMessage(const Telegram& msg);
+  virtual void Render();
+  virtual void Update();
+  virtual bool HandleMessage(const Telegram& msg);
   void         Write(std::ostream&  os)const{/*not implemented*/}
   void         Read (std::ifstream& is){/*not implemented*/}
 
@@ -153,6 +166,7 @@ public:
   double        FieldOfView()const{return m_dFieldOfView;}
 
   bool          isPossessed()const{return m_bPossessed;}
+  bool			isLeader()const {return m_bLeader;}
   bool          isDead()const{return m_Status == dead;}
   bool          isAlive()const{return m_Status == alive;}
   bool          isSpawning()const{return m_Status == spawning;}
@@ -168,15 +182,25 @@ public:
   //returns true if the bot is close to the given position
   bool          isAtPosition(Vector2D pos)const;
 
+  // Add teammate
+  void AddTeammate(int Id);
+  // Remove teammate
+  void RemoveTeammate(int Id);
 
+  // Get Head color
+  int GetHeadColor() { return m_HeadColor; }
+
+  // Get teammates
+  std::vector<int> GetTeammatesIDs();
+  
   //interface for human player
   void          FireWeapon(Vector2D pos);
   void          ChangeWeapon(unsigned int type);
   void          TakePossession();
-  void          Exorcise();
+  virtual void  Exorcise();
 
   //spawns the bot at the given position
-  void          Spawn(Vector2D pos);
+  virtual void  Spawn(Vector2D pos);
   
   //returns true if this bot is ready to test against all triggers
   bool          isReadyForTriggerUpdate()const;

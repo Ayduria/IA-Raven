@@ -25,13 +25,13 @@ private:
   
   typedef std::vector<Goal_Evaluator*>   GoalEvaluators;
 
-private:
+protected:
   
   GoalEvaluators  m_Evaluators;
 
 public:
 
-  Goal_Think(Raven_Bot* pBot);
+  Goal_Think(Raven_Bot* pBot, int goalType);
   ~Goal_Think();
 
   //this method iterates through each goal evaluator and selects the one

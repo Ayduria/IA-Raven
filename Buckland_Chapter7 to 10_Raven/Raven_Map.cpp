@@ -163,7 +163,6 @@ void Raven_Map::AddWeapon_Giver(int type_of_weapon, std::ifstream& in)
   EntityMgr->RegisterEntity(wg);
 }
 
-
 //------------------------- LoadMap ------------------------------------
 //
 //  sets up the game environment from map file
@@ -336,6 +335,50 @@ void Raven_Map::PartitionNavGraph()
   {
     m_pSpacePartition->AddEntity(pN);
   }   
+}
+
+//---------------------------- AddIventory_giver ------------------------------
+//
+//  given the bot that has died, this method adds a inventory trigger
+//-----------------------------------------------------------------------------
+void Raven_Map::AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inventory)
+{
+    Raven_Map::GraphNode node = GetClosestNodeIdToPosition(pBot->Pos());
+
+    Trigger_InventoryGiver* ig = new Trigger_InventoryGiver(pBot->GetNextValidID(), inventory, node.Pos(), node.Index());
+    m_TriggerSystem.Register(ig);
+
+    NavGraph::NodeType& nodeType = m_pNavGraph->GetNode(ig->GraphNodeIndex());
+
+    nodeType.SetExtraInfo(ig);
+}
+
+Raven_Map::GraphNode Raven_Map::GetClosestNodeIdToPosition(Vector2D position)
+{
+    Raven_Map::GraphNode closestNode = m_pNavGraph->GetNode(0);
+
+    double a = abs(position.x - closestNode.Pos().x);
+    double b = abs(position.y - closestNode.Pos().y);
+
+    double closestDist = sqrt(pow(a, 2) + pow(b, 2));
+
+    for (size_t i = 1; i != m_pNavGraph->NumNodes(); i++)
+    {
+        Raven_Map::GraphNode node = m_pNavGraph->GetNode(i);
+
+        a = abs(position.x - node.Pos().x);
+        b = abs(position.y - node.Pos().y);
+
+        double newDist = sqrt(pow(a, 2) + pow(b, 2));
+
+        if (newDist < closestDist)
+        {
+            closestNode = node;
+            closestDist = newDist;
+        }
+    }
+    
+    return closestNode;
 }
 
 //---------------------------- AddSoundTrigger --------------------------------

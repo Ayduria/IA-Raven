@@ -6,6 +6,7 @@
 
 enum
 {
+  goal_thinkteammate,
   goal_think,
   goal_explore,
   goal_arrive_at_position,

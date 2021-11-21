@@ -29,18 +29,36 @@
 
 
 //uncomment to write object creation/deletion to debug console
-//#define  LOG_CREATIONAL_STUFF
+#define  LOG_CREATIONAL_STUFF
+#ifdef LOG_CREATIONAL_STUFF
+#include "misc/Stream_Utility_Functions.h"
+#endif // LOG_CREATIONAL_STUFF
 
+#include "debug/DebugConsole.h"
 
 //----------------------------- ctor ------------------------------------------
 //-----------------------------------------------------------------------------
 Raven_Game::Raven_Game():m_pSelectedBot(NULL),
                          m_bPaused(false),
                          m_bRemoveABot(false),
+                         m_bRemoveATeammateBot(false),
                          m_pMap(NULL),
                          m_pPathManager(NULL),
                          m_pGraveMarkers(NULL)
 {
+  //Populate head color
+  m_pHeadColorList.push_back(HeadColor::black);
+  m_pHeadColorList.push_back(HeadColor::blue);
+  m_pHeadColorList.push_back(HeadColor::brown);
+  m_pHeadColorList.push_back(HeadColor::darkgreen);
+  m_pHeadColorList.push_back(HeadColor::green);
+  m_pHeadColorList.push_back(HeadColor::grey);
+  m_pHeadColorList.push_back(HeadColor::yellow);
+  m_pHeadColorList.push_back(HeadColor::lightblue);
+  m_pHeadColorList.push_back(HeadColor::orange);
+  m_pHeadColorList.push_back(HeadColor::red);
+  m_pHeadColorList.push_back(HeadColor::white);
+
   //load in the default map
   LoadMap(script->GetString("StartMap"));
 }
@@ -181,18 +199,258 @@ void Raven_Game::Update()
   //one
   if (m_bRemoveABot)
   { 
-    if (!m_Bots.empty())
-    {
-      Raven_Bot* pBot = m_Bots.back();
-      if (pBot == m_pSelectedBot)m_pSelectedBot=0;
-      NotifyAllBotsOfRemoval(pBot);
-      delete m_Bots.back();
-      m_Bots.remove(pBot);
-      pBot = 0;
-    }
+      bool removeLastBotAdded = true;
+      if (m_pSelectedBot)
+      {
+          if (m_pSelectedBot->isLeader()) // If we have a leader bot selected, delete this bot.
+          {
+              removeLastBotAdded = false;
 
-    m_bRemoveABot = false;
+              if (!m_Bots.empty())
+              {
+                  Raven_Bot* pBot = nullptr;
+                  int botHeadColor = -1;
+                  for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
+                      if ((*it)->isLeader())
+                      {
+                          if ((*it)->ID() == m_pSelectedBot->ID()) // Leader bot to be deleted
+                          {
+                              pBot = *it;
+                              break;
+                          }
+                      }
+                  }
+                  botHeadColor = pBot->GetHeadColor();
+                  if (pBot)
+                  {
+                      if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
+                      NotifyAllBotsOfRemoval(pBot);
+
+                      // kill all teammate
+                      while (pBot->GetTeammatesIDs().size() != 0)
+                      {
+                          Raven_Bot* teammateBot = nullptr;
+                          bool foundTeammate = false;
+                          for (int i = 0; i < pBot->GetTeammatesIDs().size(); i++)
+                          {
+                              for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
+                                  if (!(*it)->isLeader() && (*it)->ID() == pBot->GetTeammatesIDs()[i])
+                                  {
+                                      teammateBot = *it;
+                                      foundTeammate = true;
+                                      break;
+                                  }
+                              }
+                              if (foundTeammate)
+                                  break;
+                          }
+
+                          if (teammateBot)
+                          {
+                              if (teammateBot == m_pSelectedBot)m_pSelectedBot = 0;
+                              NotifyAllBotsOfRemoval(teammateBot);
+
+                              // Remove teammate from leader
+                              pBot->RemoveTeammate(teammateBot->ID());
+
+                              for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
+                                  if ((*it) == teammateBot)
+                                  {
+                                      delete (*it);
+                                      break;
+                                  }
+                              }
+                              m_Bots.remove(teammateBot);
+                              teammateBot = 0;
+                          }
+                      }
+
+                      for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
+                          if ((*it) == pBot)
+                          {
+                              delete (*it);
+                              break;
+                          }
+                      }
+                      AddBotHeadColorBack(botHeadColor);
+                      m_Bots.remove(pBot);
+                      pBot = 0;
+                  }
+              }
+          }
+      }
+
+      if (removeLastBotAdded) // If no leader bot were selected, the last leader bot added will be removed.
+      {
+          if (!m_Bots.empty())
+          {
+              Raven_Bot* pBot = nullptr;
+              int botHeadColor = -1;
+              for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
+                  if ((*it)->isLeader())
+                  {
+                      pBot = *it;
+                      break;
+                  }
+              }
+              botHeadColor = pBot->GetHeadColor();
+              if (pBot)
+              {
+                  if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
+                  NotifyAllBotsOfRemoval(pBot);
+
+                  // kill all teammate
+                  while (pBot->GetTeammatesIDs().size() != 0)
+                  {
+                      Raven_Bot* teammateBot = nullptr;
+                      bool foundTeammate = false;
+                      for (int i = 0; i < pBot->GetTeammatesIDs().size(); i++)
+                      {
+                          for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
+                              if (!(*it)->isLeader() && (*it)->ID() == pBot->GetTeammatesIDs()[i])
+                              {
+                                  teammateBot = *it;
+                                  foundTeammate = true;
+                                  break;
+                              }
+                          }
+                          if (foundTeammate)
+                              break;
+                      }
+
+                      if (teammateBot)
+                      {
+                          if (teammateBot == m_pSelectedBot)m_pSelectedBot = 0;
+                          NotifyAllBotsOfRemoval(teammateBot);
+
+                          // Remove teammate from leader
+                          pBot->RemoveTeammate(teammateBot->ID());
+
+                          for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
+                              if ((*it) == teammateBot)
+                              {
+                                  delete (*it);
+                                  break;
+                              }
+                          }
+                          m_Bots.remove(teammateBot);
+                          teammateBot = 0;
+                      }
+                  }
+
+                  for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
+                      if ((*it) == pBot)
+                      {
+                          delete (*it);
+                          break;
+                      }
+                  }
+                  AddBotHeadColorBack(botHeadColor);
+                  m_Bots.remove(pBot);
+                  pBot = 0;
+              }
+          }
+      }
+
+        m_bRemoveABot = false;
   }
+
+  if (m_bRemoveATeammateBot)
+  {
+      bool removeLastBotAdded = true;
+      if (m_pSelectedBot)
+      {
+          if (m_pSelectedBot->isLeader()) // If we have a leader bot selected, we remove the last teammate bot added for him.
+          {
+              removeLastBotAdded = false;
+
+              if (!m_Bots.empty())
+              {
+                  Raven_Bot* pBot = nullptr;
+                  for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
+                      if (!(*it)->isLeader())
+                      {
+                          if (((Raven_Teammate*)(*it))->GetLeader()->ID() == m_pSelectedBot->ID()) // Delete only if he is a teammate of the selected bot.
+                          {
+                              pBot = *it;
+                              break;
+                          }
+                      }
+                  }
+
+                  if (pBot)
+                  {
+                      if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
+                      NotifyAllBotsOfRemoval(pBot);
+
+                      // Remove teammate from leader
+                      Raven_Teammate* tBot = (Raven_Teammate*)pBot;
+                      Raven_Bot* leader = tBot->GetLeader();
+                      leader->RemoveTeammate(pBot->ID());
+
+                      for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
+                          if ((*it) == pBot)
+                          {
+                              delete (*it);
+                              break;
+                          }
+                      }
+                      m_Bots.remove(pBot);
+                      pBot = 0;
+                  }
+              }
+          }
+      }
+      if (removeLastBotAdded) // If no leader bot is selected, we remove the last teammate bot added for any bot.
+      {
+          if (!m_Bots.empty())
+          {
+              Raven_Bot* pBot = nullptr;
+              for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
+                  if (!(*it)->isLeader())
+                  {
+                      pBot = *it;
+                      break;
+                  }
+              }
+
+              if (pBot)
+              {
+                  if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
+                  NotifyAllBotsOfRemoval(pBot);
+
+                  // Remove teammate from leader
+                  Raven_Teammate* tBot = (Raven_Teammate*)pBot;
+                  Raven_Bot* leader = tBot->GetLeader();
+                  leader->RemoveTeammate(pBot->ID());
+
+                  for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
+                      if ((*it) == pBot)
+                      {
+                          delete (*it);
+                          break;
+                      }
+                  }
+                  m_Bots.remove(pBot);
+                  pBot = 0;
+              }
+          }
+      }
+
+      m_bRemoveATeammateBot = false;
+  }
+}
+
+//----------------------------- AddBotHeadColorBack -------------------------------
+//-----------------------------------------------------------------------------
+void Raven_Game::AddBotHeadColorBack(int botHeadColor)
+{
+    if (HeadColor(botHeadColor) != HeadColor::white)
+    {
+        m_pHeadColorList.pop_back();
+        m_pHeadColorList.push_back(HeadColor(botHeadColor));
+        m_pHeadColorList.push_back(HeadColor::white);
+    }
 }
 
 
@@ -250,7 +508,20 @@ void Raven_Game::AddBots(unsigned int NumBotsToAdd)
   {
     //create a bot. (its position is irrelevant at this point because it will
     //not be rendered until it is spawned)
-    Raven_Bot* rb = new Raven_Bot(this, Vector2D());
+    Raven_Bot* rb = new Raven_Bot(this, Vector2D(), script->GetDouble("Leader_Scale"), m_pHeadColorList.front());
+    /*if (m_pHeadColorList.size() > 1 && m_pHeadColorList.front() == HeadColor::hollow)
+    {
+        m_pHeadColorList.pop_front();
+        rb = new Raven_Bot(this, Vector2D(), script->GetDouble("Leader_Scale"), m_pHeadColorList.front());
+    }
+    else
+    {
+        rb = new Raven_Bot(this, Vector2D(), script->GetDouble("Leader_Scale"), m_pHeadColorList.front());
+    }*/
+    if (m_pHeadColorList.size() > 1)
+    {
+        m_pHeadColorList.pop_front();
+    }
 
     //switch the default steering behaviors on
     rb->GetSteering()->WallAvoidanceOn();
@@ -266,6 +537,43 @@ void Raven_Game::AddBots(unsigned int NumBotsToAdd)
   debug_con << "Adding bot with ID " << ttos(rb->ID()) << "";
 #endif
   }
+}
+
+//-------------------------- AddTeammates --------------------------------------
+//
+//  Adds a teammate and switches on the default steering behavior
+//-----------------------------------------------------------------------------
+void Raven_Game::AddTeammates(unsigned int NumTeammatesToAdd)
+{
+    if (m_pSelectedBot)
+    {
+        while (NumTeammatesToAdd--)
+        {
+            //create a teammate. (its position is irrelevant at this point because it will
+            //not be rendered until it is spawned)
+            Raven_Bot* rb = new Raven_Teammate(this, Vector2D(), m_pSelectedBot);
+
+            m_pSelectedBot->AddTeammate(rb->ID());
+
+            //switch the default steering behaviors on
+            rb->GetSteering()->WallAvoidanceOn();
+            rb->GetSteering()->SeparationOn();
+
+            m_Bots.push_back(rb);
+
+            //register the bot with the entity manager
+            EntityMgr->RegisterEntity(rb);
+
+
+#ifdef LOG_CREATIONAL_STUFF
+            debug_con << "Adding teammate with ID " << ttos(rb->ID()) << "";
+#endif
+        }
+    }
+    else
+    {
+        debug_con << "Failed to add teammate. You need to have selected a leader first." << "";
+    }
 }
 
 //---------------------------- NotifyAllBotsOfRemoval -------------------------
@@ -293,7 +601,16 @@ void Raven_Game::NotifyAllBotsOfRemoval(Raven_Bot* pRemovedBot)const
 //-----------------------------------------------------------------------------
 void Raven_Game::RemoveBot()
 {
-  m_bRemoveABot = true;
+    m_bRemoveABot = true;
+}
+
+//-------------------------------RemoveTeammate ------------------------------------
+//
+//  removes the last teammate to be added from the game
+//-----------------------------------------------------------------------------
+void Raven_Game::RemoveTeammate()
+{
+    m_bRemoveATeammateBot = true;
 }
 
 //--------------------------- AddBolt -----------------------------------------
@@ -411,9 +728,31 @@ bool Raven_Game::LoadMap(const std::string& filename)
 //-----------------------------------------------------------------------------
 void Raven_Game::ExorciseAnyPossessedBot()
 {
-  if (m_pSelectedBot) m_pSelectedBot->Exorcise();
+    if (m_pSelectedBot)
+    {
+        if (m_pSelectedBot->isPossessed())
+        {
+            m_pSelectedBot->Exorcise();
+        }
+        else
+        {
+            m_pSelectedBot = 0;
+        }
+    }
 }
 
+void Raven_Game::KillSelectedBot()
+{
+    if (m_pSelectedBot)
+    {
+        int headShot = 100;
+        Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+            m_pSelectedBot->ID(),
+            m_pSelectedBot->ID(),
+            Msg_TakeThatMF,
+            (void*)&headShot);
+    }
+}
 
 //-------------------------- ClickRightMouseButton -----------------------------
 //
@@ -444,7 +783,7 @@ void Raven_Game::ClickRightMouseButton(POINTS p)
 
   //if the user clicks on a selected bot twice it becomes possessed(under
   //the player's control)
-  if (pBot && pBot == m_pSelectedBot)
+  if (pBot && pBot == m_pSelectedBot && pBot->isLeader())
   {
     m_pSelectedBot->TakePossession();
 
@@ -478,7 +817,38 @@ void Raven_Game::ClickLeftMouseButton(POINTS p)
 {
   if (m_pSelectedBot && m_pSelectedBot->isPossessed())
   {
-    m_pSelectedBot->FireWeapon(POINTStoVector(p));
+      // Get the bot at this position
+      Raven_Bot* pBot = GetBotAtPosition(POINTStoVector(p));
+
+      //if there is a bot, we might send the signal to our teammate
+      if (pBot)
+      {
+          // Check if the bot is not already the target of our leader or ourselves
+          if (m_pSelectedBot->GetTargetBot() != pBot && pBot != m_pSelectedBot)
+          {
+                std::vector<int> teammatesIDs = m_pSelectedBot->GetTeammatesIDs();
+                // Check if pBot is not a teammate
+                if (!(std::find(teammatesIDs.begin(), teammatesIDs.end(), pBot->ID()) != teammatesIDs.end()))
+                {
+                    m_pSelectedBot->GetTargetSys()->SetTarget(pBot);
+                    MemorySlice* slice = m_pSelectedBot->GetSensoryMem()->GetMemorySliceOfOpponent(pBot);
+                    // Send the memory slice to our teammate
+                    for (size_t i = 0; i < teammatesIDs.size(); i++)
+                    {
+                        Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+                            m_pSelectedBot->ID(),
+                            teammatesIDs[i],
+                            Msg_YoTeamINeedHelp,
+                            (void*)slice);
+                    }
+                } 
+          }
+      }
+      else
+      {
+          m_pSelectedBot->GetTargetSys()->SetTarget(nullptr);
+      }
+      m_pSelectedBot->FireWeapon(POINTStoVector(p));
   }
 }
 

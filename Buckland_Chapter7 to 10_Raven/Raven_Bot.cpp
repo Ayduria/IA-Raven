@@ -11,6 +11,7 @@
 #include "time/Regulator.h"
 #include "Raven_WeaponSystem.h"
 #include "Raven_SensoryMemory.h"
+#include "armory/Raven_Weapon.h"
 
 #include "Messaging/Telegram.h"
 #include "Raven_Messages.h"
@@ -23,15 +24,15 @@
 #include "Debug/DebugConsole.h"
 
 //-------------------------- ctor ---------------------------------------------
-Raven_Bot::Raven_Bot(Raven_Game* world,Vector2D pos):
+Raven_Bot::Raven_Bot(Raven_Game* world,Vector2D pos, double customScale, int customColor):
 
   MovingEntity(pos,
-               script->GetDouble("Bot_Scale"),
+               customScale,
                Vector2D(0,0),
                script->GetDouble("Bot_MaxSpeed"),
                Vector2D(1,0),
                script->GetDouble("Bot_Mass"),
-               Vector2D(script->GetDouble("Bot_Scale"),script->GetDouble("Bot_Scale")),
+               Vector2D(customScale, customScale),
                script->GetDouble("Bot_MaxHeadTurnRate"),
                script->GetDouble("Bot_MaxForce")),
                  
@@ -46,7 +47,9 @@ Raven_Bot::Raven_Bot(Raven_Game* world,Vector2D pos):
                  m_iScore(0),
                  m_Status(spawning),
                  m_bPossessed(false),
-                 m_dFieldOfView(DegsToRads(script->GetDouble("Bot_FOV")))
+                 m_dFieldOfView(DegsToRads(script->GetDouble("Bot_FOV"))),
+                 m_customScale(customScale),
+                 m_HeadColor(customColor)
            
 {
   SetEntityType(type_bot);
@@ -70,7 +73,7 @@ Raven_Bot::Raven_Bot(Raven_Game* world,Vector2D pos):
   m_pVisionUpdateRegulator = new Regulator(script->GetDouble("Bot_VisionUpdateFreq"));
 
   //create the goal queue
-  m_pBrain = new Goal_Think(this);
+  m_pBrain = new Goal_Think(this, goal_think);
 
   //create the targeting system
   m_pTargSys = new Raven_TargetingSystem(this);
@@ -239,6 +242,55 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
                               msg.Sender,
                               Msg_YouGotMeYouSOB,
                               NO_ADDITIONAL_INFO);
+
+      std::vector<int> teammatesIds;
+      if (isLeader())
+      {
+          teammatesIds = GetTeammatesIDs();
+      }
+      else
+      {
+          teammatesIds = ((Raven_Teammate*)this)->GetLeader()->GetTeammatesIDs();
+      }
+
+      /*
+         type_rail_gun        = 6
+         type_rocket_launcher = 7
+         type_shotgun         = 8
+      */
+      std::vector<WeaponData*> myStuff;
+      for (size_t i = 6; i != 9; i++)
+      {
+          Raven_Weapon* weapon = this->GetWeaponSys()->GetWeaponFromInventory(i);
+          if (weapon)
+          {
+              WeaponData* wd = new WeaponData();
+
+              wd->weaponType = i;
+              wd->ammoLeft = weapon->NumRoundsRemaining();
+
+              myStuff.push_back(wd);
+          }
+      }
+
+      // spawn gun triggers
+      if (myStuff.size() != 0)
+      {
+        GetWorld()->GetMap()->AddInventory_Giver(this, myStuff);
+
+        MyPos* pos = new MyPos();
+        pos->x = Pos().x;
+        pos->y = Pos().y;
+
+        for (int Id : teammatesIds)
+        {
+            Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+                ID(),
+                Id,
+                Msg_HereMyStuff,
+                (void*)pos);
+        }
+      }
     }
 
     return true;
@@ -251,6 +303,14 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
     m_pTargSys->ClearTarget();
 
     return true;
+
+  case Msg_HereMyStuff:
+  {
+      MyPos* pos = (MyPos*)msg.ExtraInfo;
+      // TODO add another evaluator for inventory
+      GetBrain()->AddGoal_MoveToPosition(Vector2D(pos->x, pos->y));
+      return true;
+  }
 
   case Msg_GunshotSound:
 
@@ -377,6 +437,25 @@ void Raven_Bot::ChangeWeapon(unsigned int type)
   m_pWeaponSys->ChangeWeapon(type);
 }
   
+//----------------------- AddTeammate -----------------------------------------
+void Raven_Bot::AddTeammate(int Id) 
+{
+    m_teammatesID.push_back(Id);
+}
+
+//----------------------- AddTeammate -----------------------------------------
+void Raven_Bot::RemoveTeammate(int Id)
+{
+    std::vector<int>::iterator position = std::find(m_teammatesID.begin(), m_teammatesID.end(), Id);
+    if (position != m_teammatesID.end()) // == m_teammatesID.end() means the element was not found
+        m_teammatesID.erase(position);
+}
+
+//----------------------- GetTeammatesIDs -------------------------------------
+std::vector<int> Raven_Bot::GetTeammatesIDs()
+{
+    return m_teammatesID;
+}
 
 //---------------------------- FireWeapon -------------------------------------
 //
@@ -497,7 +576,7 @@ void Raven_Bot::Render()
   gdi->ClosedShape(m_vecBotVBTrans);
   
   //draw the head
-  gdi->BrownBrush();
+  SetHeadBrushColor();
   gdi->Circle(Pos(), 6.0 * Scale().x);
 
 
@@ -548,7 +627,8 @@ void Raven_Bot::SetUpVertexBuffer()
                                      Vector2D(-3,-8)};
 
   m_dBoundingRadius = 0.0;
-  double scale = script->GetDouble("Bot_Scale");
+  double scale = m_customScale;
+  
   
   for (int vtx=0; vtx<NumBotVerts; ++vtx)
   {
@@ -576,4 +656,49 @@ void Raven_Bot::IncreaseHealth(unsigned int val)
 {
   m_iHealth+=val; 
   Clamp(m_iHealth, 0, m_iMaxHealth);
+}
+
+void Raven_Bot::SetHeadBrushColor()
+{
+    switch (m_HeadColor)
+    {
+    case 0:
+        gdi->BlackBrush();
+        break;
+    case 1:
+        gdi->BlueBrush();
+        break;
+    case 2:
+        gdi->BrownBrush();
+        break;
+    case 3:
+        gdi->DarkGreenBrush();
+        break;
+    case 4:
+        gdi->GreenBrush();
+        break;
+    case 5:
+        gdi->GreyBrush();
+        break;
+    case 6:
+        gdi->HollowBrush();
+        break;
+    case 7:
+        gdi->LightBlueBrush();
+        break;
+    case 8:
+        gdi->OrangeBrush();
+        break;
+    case 9:
+        gdi->RedBrush();
+        break;
+    case 10:
+        gdi->WhiteBrush();
+        break;
+    case 11:
+        gdi->YellowBrush();
+        break;
+    default:
+        break;
+    }
 }

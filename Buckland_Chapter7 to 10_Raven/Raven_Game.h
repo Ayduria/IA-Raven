@@ -24,6 +24,7 @@
 #include "misc/utils.h"
 #include "game/EntityFunctionTemplates.h"
 #include "Raven_Bot.h"
+#include "Raven_Teammate.h"
 #include "navigation/pathmanager.h"
 
 
@@ -32,11 +33,27 @@ class Raven_Projectile;
 class Raven_Map;
 class GraveMarkers;
 
-
+enum HeadColor { 
+    black = 0, 
+    blue = 1,
+    brown = 2,
+    darkgreen = 3,
+    green = 4,
+    grey = 5,
+    hollow = 6,
+    lightblue = 7,
+    orange = 8,
+    red = 9,
+    white = 10,
+    yellow = 11
+};
 
 class Raven_Game
 {
 private:
+
+  // Color
+  std::list<HeadColor>             m_pHeadColorList;
 
   //the current game map
   Raven_Map*                       m_pMap;
@@ -62,6 +79,9 @@ private:
   //if true a bot is removed from the game
   bool                             m_bRemoveABot;
 
+  //if true a teammate bot is removed from the game
+  bool                             m_bRemoveATeammateBot;
+
   //when a bot is killed a "grave" is displayed for a few seconds. This
   //class manages the graves
   GraveMarkers*                    m_pGraveMarkers;
@@ -80,6 +100,9 @@ private:
   //must be notified so that they can remove any references to that bot from
   //their memory
   void NotifyAllBotsOfRemoval(Raven_Bot* pRemovedBot)const;
+
+  //Add bot head color that we removed back into the list
+  void AddBotHeadColorBack(int botHeadColor);
   
 public:
   
@@ -94,6 +117,7 @@ public:
   bool LoadMap(const std::string& FileName); 
 
   void AddBots(unsigned int NumBotsToAdd);
+  void AddTeammates(unsigned int NumTeammatesToAdd);
   void AddRocket(Raven_Bot* shooter, Vector2D target);
   void AddRailGunSlug(Raven_Bot* shooter, Vector2D target);
   void AddShotGunPellet(Raven_Bot* shooter, Vector2D target);
@@ -101,6 +125,9 @@ public:
 
   //removes the last bot to be added
   void RemoveBot();
+  void RemoveTeammate();
+
+  void KillSelectedBot();
 
   //returns true if a bot of size BoundingRadius cannot move from A to B
   //without bumping into world geometry
