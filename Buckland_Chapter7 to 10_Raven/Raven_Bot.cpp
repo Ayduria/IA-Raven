@@ -24,15 +24,15 @@
 #include "Debug/DebugConsole.h"
 
 //-------------------------- ctor ---------------------------------------------
-Raven_Bot::Raven_Bot(Raven_Game* world,Vector2D pos):
+Raven_Bot::Raven_Bot(Raven_Game* world,Vector2D pos, double customScale, int customColor):
 
   MovingEntity(pos,
-               script->GetDouble("Bot_Scale"),
+               customScale,
                Vector2D(0,0),
                script->GetDouble("Bot_MaxSpeed"),
                Vector2D(1,0),
                script->GetDouble("Bot_Mass"),
-               Vector2D(script->GetDouble("Bot_Scale"),script->GetDouble("Bot_Scale")),
+               Vector2D(customScale, customScale),
                script->GetDouble("Bot_MaxHeadTurnRate"),
                script->GetDouble("Bot_MaxForce")),
                  
@@ -47,7 +47,9 @@ Raven_Bot::Raven_Bot(Raven_Game* world,Vector2D pos):
                  m_iScore(0),
                  m_Status(spawning),
                  m_bPossessed(false),
-                 m_dFieldOfView(DegsToRads(script->GetDouble("Bot_FOV")))
+                 m_dFieldOfView(DegsToRads(script->GetDouble("Bot_FOV"))),
+                 m_customScale(customScale),
+                 m_HeadColor(customColor)
            
 {
   SetEntityType(type_bot);
@@ -431,6 +433,14 @@ void Raven_Bot::AddTeammate(int Id)
     m_teammatesID.push_back(Id);
 }
 
+//----------------------- AddTeammate -----------------------------------------
+void Raven_Bot::RemoveTeammate(int Id)
+{
+    std::vector<int>::iterator position = std::find(m_teammatesID.begin(), m_teammatesID.end(), Id);
+    if (position != m_teammatesID.end()) // == m_teammatesID.end() means the element was not found
+        m_teammatesID.erase(position);
+}
+
 //----------------------- GetTeammatesIDs -------------------------------------
 std::vector<int> Raven_Bot::GetTeammatesIDs()
 {
@@ -556,14 +566,7 @@ void Raven_Bot::Render()
   gdi->ClosedShape(m_vecBotVBTrans);
   
   //draw the head
-  if (m_teammatesID.size() == 0)
-  {
-    gdi->BrownBrush();
-  }
-  else
-  {
-    gdi->BlueBrush();
-  }
+  SetHeadBrushColor();
   gdi->Circle(Pos(), 6.0 * Scale().x);
 
 
@@ -614,7 +617,8 @@ void Raven_Bot::SetUpVertexBuffer()
                                      Vector2D(-3,-8)};
 
   m_dBoundingRadius = 0.0;
-  double scale = script->GetDouble("Bot_Scale");
+  double scale = m_customScale;
+  
   
   for (int vtx=0; vtx<NumBotVerts; ++vtx)
   {
@@ -642,4 +646,49 @@ void Raven_Bot::IncreaseHealth(unsigned int val)
 {
   m_iHealth+=val; 
   Clamp(m_iHealth, 0, m_iMaxHealth);
+}
+
+void Raven_Bot::SetHeadBrushColor()
+{
+    switch (m_HeadColor)
+    {
+    case 0:
+        gdi->BlackBrush();
+        break;
+    case 1:
+        gdi->BlueBrush();
+        break;
+    case 2:
+        gdi->BrownBrush();
+        break;
+    case 3:
+        gdi->DarkGreenBrush();
+        break;
+    case 4:
+        gdi->GreenBrush();
+        break;
+    case 5:
+        gdi->GreyBrush();
+        break;
+    case 6:
+        gdi->HollowBrush();
+        break;
+    case 7:
+        gdi->LightBlueBrush();
+        break;
+    case 8:
+        gdi->OrangeBrush();
+        break;
+    case 9:
+        gdi->RedBrush();
+        break;
+    case 10:
+        gdi->WhiteBrush();
+        break;
+    case 11:
+        gdi->YellowBrush();
+        break;
+    default:
+        break;
+    }
 }

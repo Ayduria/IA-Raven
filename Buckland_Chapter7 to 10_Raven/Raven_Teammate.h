@@ -47,7 +47,6 @@ public:
 	Raven_Teammate(Raven_Game* world, Vector2D pos, Raven_Bot* leader);
 
 	//the usual suspects
-	void Render() override;
 	void Update() override;
 	bool HandleMessage(const Telegram& msg) override;
 
