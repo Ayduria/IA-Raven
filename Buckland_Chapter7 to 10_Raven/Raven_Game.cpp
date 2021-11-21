@@ -464,6 +464,18 @@ void Raven_Game::ExorciseAnyPossessedBot()
   if (m_pSelectedBot) m_pSelectedBot->Exorcise();
 }
 
+void Raven_Game::KillSelectedBot()
+{
+    if (m_pSelectedBot)
+    {
+        int headShot = 100;
+        Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+            m_pSelectedBot->ID(),
+            m_pSelectedBot->ID(),
+            Msg_TakeThatMF,
+            (void*)&headShot);
+    }
+}
 
 //-------------------------- ClickRightMouseButton -----------------------------
 //

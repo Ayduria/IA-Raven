@@ -53,7 +53,6 @@ public:
 template <class entity_type>
 void  Trigger_OnButtonSendMsg<entity_type>::Try(entity_type* pEnt)
 {
-
   if (isTouchingTrigger(pEnt->Pos(), pEnt->BRadius()))
   {
       Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,

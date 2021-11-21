@@ -24,6 +24,13 @@ void Raven_TargetingSystem::Update()
     /// 
     /// - Envoie le message Msg_YoTeamINeedHelp quand on controle le joueur
     /// - Drop weapon et envoie au teammate la position
+    ///     Get Held weapon of dead bot + ammo count
+    ///     RavenWeapon* weapon = m_pWeaponSys->GetWeaponFromInventory();
+    ///     int ammo = m_pWeaponSys->GetAmmoRemainingForWeapon();
+    ///     spawn something on the ground (tombstone? square? something)
+    ///     
+    ///     Add a goal (to get item - go to position what ever that does it)
+    ///     
     /// </summary>
     bool ignoreTargetingSystem = false;
     if (!m_pOwner->isLeader())

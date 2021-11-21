@@ -18,6 +18,11 @@ class Raven_Bot;
 class Raven_Weapon;
 
 
+struct WeaponData
+{
+    int weaponType;
+    int ammoLeft;
+};
 
 class Raven_WeaponSystem
 {
@@ -86,6 +91,11 @@ public:
   //If the bot already has a weapon of this type only the ammo is added. 
   //(called by the weapon giver-triggers to give a bot a weapon)
   void          AddWeapon(unsigned int weapon_type);
+
+  //this will add a weapon to the bot's inventory. If the bot already has
+  //the same weapon type, only the remaning ammo is added.
+  //(called by the inventory giver-trigger to give a bot the inventory of a deceased)
+  void          AddWeapon(WeaponData* weapon);
 
   //changes the current weapon to one of the specified type (provided that type
   //is in the bot's possession)

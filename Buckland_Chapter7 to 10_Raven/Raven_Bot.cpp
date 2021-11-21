@@ -11,6 +11,7 @@
 #include "time/Regulator.h"
 #include "Raven_WeaponSystem.h"
 #include "Raven_SensoryMemory.h"
+#include "armory/Raven_Weapon.h"
 
 #include "Messaging/Telegram.h"
 #include "Raven_Messages.h"
@@ -239,6 +240,53 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
                               msg.Sender,
                               Msg_YouGotMeYouSOB,
                               NO_ADDITIONAL_INFO);
+
+      std::vector<int> teammatesIds;
+      if (isLeader())
+      {
+          teammatesIds = GetTeammatesIDs();
+      }
+      else
+      {
+          teammatesIds = ((Raven_Teammate*)this)->GetLeader()->GetTeammatesIDs();
+      }
+
+      MyPos* pos = new MyPos();
+      pos->x = Pos().x;
+      pos->y = Pos().y;
+
+      for (int Id : teammatesIds)
+      {
+          Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+              ID(),
+              Id,
+              Msg_HereMyStuff,
+              (void*)pos);
+      }
+
+      /*
+         type_rail_gun        = 6
+         type_rocket_launcher = 7
+         type_shotgun         = 8
+      */
+      std::vector<WeaponData*> myStuff;
+      for (size_t i = 6; i != 9; i++)
+      {
+          Raven_Weapon* weapon = this->GetWeaponSys()->GetWeaponFromInventory(i);
+          if (weapon)
+          {
+              WeaponData* wd = new WeaponData();
+
+              wd->weaponType = i;
+              wd->ammoLeft = weapon->NumRoundsRemaining();
+
+              myStuff.push_back(wd);
+          }
+      }
+
+      // spawn gun triggers
+      if (myStuff.size() != 0)
+        GetWorld()->GetMap()->AddInventory_Giver(this, myStuff);
     }
 
     return true;

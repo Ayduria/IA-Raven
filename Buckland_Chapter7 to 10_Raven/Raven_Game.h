@@ -105,6 +105,8 @@ public:
   void RemoveBot();
   void RemoveTeammate();
 
+  void KillSelectedBot();
+
   //returns true if a bot of size BoundingRadius cannot move from A to B
   //without bumping into world geometry
   bool isPathObstructed(Vector2D A, Vector2D B, double BoundingRadius = 0)const;

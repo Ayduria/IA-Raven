@@ -24,6 +24,7 @@
 #include "Graph/GraphNodeTypes.h"
 #include "misc/CellSpacePartition.h"
 #include "triggers/TriggerSystem.h"
+#include "Trigger_InventoryGiver.h"
 
 class BaseGameEntity;
 class Raven_Door;
@@ -99,11 +100,15 @@ public:
 
   //adds a wall and returns a pointer to that wall. (this method can be
   //used by objects such as doors to add walls to the environment)
-  Wall2D* AddWall(Vector2D from, Vector2D to);
+  Wall2D*   AddWall(Vector2D from, Vector2D to);
 
-  void    AddSoundTrigger(Raven_Bot* pSoundSource, double range);
+  void      AddSoundTrigger(Raven_Bot* pSoundSource, double range);
 
-  double   CalculateCostToTravelBetweenNodes(int nd1, int nd2)const;
+  void      AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inventory);
+
+  Raven_Map::GraphNode GetClosestNodeIdToPosition(Vector2D position);
+
+  double    CalculateCostToTravelBetweenNodes(int nd1, int nd2)const;
 
   //returns the position of a graph node selected at random
   Vector2D GetRandomNodeLocation()const;

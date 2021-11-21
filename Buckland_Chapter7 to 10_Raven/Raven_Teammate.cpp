@@ -19,7 +19,6 @@
 #include "goals/Raven_Goal_Types.h"
 #include "Goal_ThinkTeammate.h"
 
-
 #include "Debug/DebugConsole.h"
 
 //-------------------------- ctor ---------------------------------------------
@@ -61,10 +60,7 @@ void Raven_Teammate::Update()
 bool Raven_Teammate::HandleMessage(const Telegram& msg)
 {
     if (Raven_Bot::HandleMessage(msg))
-    {
         return true;
-    }
-
     //handle any messages not handles by the goals
     switch (msg.Msg)
     {
@@ -77,7 +73,11 @@ bool Raven_Teammate::HandleMessage(const Telegram& msg)
         GetBrain()->AddGoal_AttackTarget();
         return true;
     }
-
+    case Msg_HereMyStuff:
+    {
+        MyPos* pos = (MyPos*)msg.ExtraInfo;
+        GetBrain()->AddGoal_MoveToPosition(Vector2D(pos->x, pos->y));
+    }
     default: return false;
     }
 }
