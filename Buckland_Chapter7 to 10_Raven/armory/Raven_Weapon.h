@@ -127,7 +127,8 @@ public:
   //returns the number of rounds remaining for the weapon
   int           NumRoundsRemaining()const{return m_iNumRoundsLeft;}
   void          DecrementNumRounds(){if (m_iNumRoundsLeft>0) --m_iNumRoundsLeft;}
-  void          IncrementRounds(int num); 
+  void          IncrementRounds(int num);
+  void          SetRoundsLeft(int roundLeft) { m_iNumRoundsLeft = roundLeft; }
   unsigned int  GetType()const{return m_iType;}
   double         GetIdealRange()const{return m_dIdealRange;}
 };

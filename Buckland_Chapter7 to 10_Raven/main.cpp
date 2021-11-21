@@ -162,6 +162,10 @@ LRESULT CALLBACK WindowProc (HWND   hwnd,
 
            break;
 
+         case 'K':
+
+           g_pRaven->KillSelectedBot();
+           break;
 
          case VK_UP:
 

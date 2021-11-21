@@ -31,6 +31,12 @@ class Goal_Think;
 class Raven_WeaponSystem;
 class Raven_SensoryMemory;
 
+struct MyPos
+{
+	double x;
+	double y;
+};
+
 class Raven_Teammate : public Raven_Bot
 {
 private:

@@ -274,6 +274,9 @@
     <ClCompile Include="Goal_ThinkTeammate.cpp">
       <Filter>AI\goals\composite</Filter>
     </ClCompile>
+    <ClCompile Include="Trigger_InventoryGiver.cpp">
+      <Filter>AI\Triggers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raven_Bot.h">
@@ -617,6 +620,9 @@
     </ClInclude>
     <ClInclude Include="Goal_ThinkTeammate.h">
       <Filter>AI\goals\composite</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger_InventoryGiver.h">
+      <Filter>AI\Triggers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

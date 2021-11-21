@@ -21,7 +21,8 @@ enum message_type
   Msg_OpenSesame,
   Msg_GunshotSound,
   Msg_UserHasRemovedBot,
-  Msg_YoTeamINeedHelp
+  Msg_YoTeamINeedHelp,
+  Msg_HereMyStuff,
 };
 
 //used for outputting debug info
@@ -64,6 +65,10 @@ inline std::string MessageToString(int msg)
   case Msg_YoTeamINeedHelp:
 
       return "Msg_YoTeamINeedHelp";
+
+  case Msg_HereMyStuff:
+
+      return "Msg_Here'sMyStuff";
 
   default:
 

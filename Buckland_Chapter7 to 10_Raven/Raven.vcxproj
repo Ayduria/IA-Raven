@@ -533,6 +533,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='boundschecker|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Trigger_InventoryGiver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goal_ThinkTeammate.h" />
@@ -649,6 +650,7 @@
     <ClInclude Include="..\Common\2D\Wall2D.h" />
     <ClInclude Include="..\Common\2D\WallIntersectionTests.h" />
     <ClInclude Include="..\Common\misc\WindowUtils.h" />
+    <ClInclude Include="Trigger_InventoryGiver.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Params.lua" />
