@@ -74,11 +74,6 @@ bool Raven_Teammate::HandleMessage(const Telegram& msg)
         GetBrain()->AddGoal_AttackTarget();
         return true;
     }
-    case Msg_HereMyStuff:
-    {
-        MyPos* pos = (MyPos*)msg.ExtraInfo;
-        GetBrain()->AddGoal_MoveToPosition(Vector2D(pos->x, pos->y));
-    }
     default: return false;
     }
 }

@@ -5,10 +5,9 @@
 Trigger_InventoryGiver::Trigger_InventoryGiver(int id, std::vector<WeaponData*> inventory, Vector2D position, int nodeIndex) : Trigger<Raven_Bot>(id),
                                                                                                                                mInventory(inventory)
 {
-    AddCircularTriggerRegion(position, 10);
-    AddRectangularTriggerRegion(Pos() = Vector2D(10, 0), Pos() = Vector2D(0, 10));
-    SetGraphNodeIndex(nodeIndex);
     SetPos(position);
+    AddRectangularTriggerRegion(Vector2D(Pos().x + 10, Pos().y), Vector2D(Pos().x, Pos().y + 10));
+    SetGraphNodeIndex(nodeIndex);
 
     const int NumRocketVerts = 8;
     const Vector2D rip[NumRocketVerts] = { Vector2D(0, 3),
@@ -40,8 +39,8 @@ void Trigger_InventoryGiver::Try(Raven_Bot* pBot)
 
 void Trigger_InventoryGiver::Render()
 {
-    gdi->BrownBrush();
-    gdi->BlackPen();
+    gdi->HollowBrush();
+    gdi->GreenPen();
     gdi->Rect(Pos().x - 10, Pos().y - 10, Pos().x + 10, Pos().y + 10);
     for (WeaponData* w : mInventory)
     {
