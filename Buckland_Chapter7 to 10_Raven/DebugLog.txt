@@ -1,0 +1,540 @@
+
+------------------------------ Clearup -------------------------------
+NavGraph for maps/Raven_DM1.map loaded okay
+Average edge length is 23.7036
+Neighborhood range set to 24.7036
+Partitioning navgraph nodes...
+Loading map...
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Wall
+Creating a Spawn Point
+Creating a Spawn Point
+Creating a Spawn Point
+Creating a Health
+Creating a Health
+Creating a Health
+Creating a rocket_launcher
+Creating a Railgun
+Creating a shotgun
+Creating a shotgun
+Creating a rocket_launcher
+maps/Raven_DM1.map loaded okay
+Adding bot with ID 401
+Adding bot with ID 402
+Adding bot with ID 403
+Adding a shotgun shell 404 at pos  356.57 316.926
+Adding a shotgun shell 405 at pos  356.57 316.926
+Adding a shotgun shell 406 at pos  356.57 316.926
+Adding a shotgun shell 407 at pos  356.57 316.926
+Adding a shotgun shell 408 at pos  356.57 316.926
+Adding a shotgun shell 409 at pos  356.57 316.926
+Adding a shotgun shell 410 at pos  356.57 316.926
+Adding a shotgun shell 411 at pos  356.57 316.926
+Adding a shotgun shell 412 at pos  356.57 316.926
+Adding a shotgun shell 413 at pos  356.57 316.926
+Adding a shotgun shell 416 at pos  282.647 147.371
+Adding a shotgun shell 417 at pos  282.647 147.371
+Adding a shotgun shell 418 at pos  282.647 147.371
+Adding a shotgun shell 419 at pos  282.647 147.371
+Adding a shotgun shell 420 at pos  282.647 147.371
+Adding a shotgun shell 421 at pos  282.647 147.371
+Adding a shotgun shell 422 at pos  282.647 147.371
+Adding a shotgun shell 423 at pos  282.647 147.371
+Adding a shotgun shell 424 at pos  282.647 147.371
+Adding a shotgun shell 425 at pos  282.647 147.371
+Adding a bolt 427 at pos  299.906 60.0076
+Adding a bolt 429 at pos  306.678 63.9718
+Adding a shotgun shell 431 at pos  305.726 124.276
+Adding a shotgun shell 432 at pos  305.726 124.276
+Adding a shotgun shell 433 at pos  305.726 124.276
+Adding a shotgun shell 434 at pos  305.726 124.276
+Adding a shotgun shell 435 at pos  305.726 124.276
+Adding a shotgun shell 436 at pos  305.726 124.276
+Adding a shotgun shell 437 at pos  305.726 124.276
+Adding a shotgun shell 438 at pos  305.726 124.276
+Adding a shotgun shell 439 at pos  305.726 124.276
+Adding a shotgun shell 440 at pos  305.726 124.276
+Adding a bolt 442 at pos  315.74 70.1998
+Adding a bolt 444 at pos  336.817 77.9235
+Adding a shotgun shell 446 at pos  330.652 103.972
+Adding a shotgun shell 447 at pos  330.652 103.972
+Adding a shotgun shell 448 at pos  330.652 103.972
+Adding a shotgun shell 449 at pos  330.652 103.972
+Adding a shotgun shell 450 at pos  330.652 103.972
+Adding a shotgun shell 451 at pos  330.652 103.972
+Adding a shotgun shell 452 at pos  330.652 103.972
+Adding a shotgun shell 453 at pos  330.652 103.972
+Adding a shotgun shell 454 at pos  330.652 103.972
+Adding a shotgun shell 455 at pos  330.652 103.972
+Adding a bolt 457 at pos  347.09 77.3865
+Adding a bolt 459 at pos  355.156 134.332
+Adding a shotgun shell 461 at pos  409.422 95.4626
+Adding a shotgun shell 462 at pos  409.422 95.4626
+Adding a shotgun shell 463 at pos  409.422 95.4626
+Adding a shotgun shell 464 at pos  409.422 95.4626
+Adding a shotgun shell 465 at pos  409.422 95.4626
+Adding a shotgun shell 466 at pos  409.422 95.4626
+Adding a shotgun shell 467 at pos  409.422 95.4626
+Adding a shotgun shell 468 at pos  409.422 95.4626
+Adding a shotgun shell 469 at pos  409.422 95.4626
+Adding a shotgun shell 470 at pos  409.422 95.4626
+Adding a bolt 472 at pos  364.018 137.147
+Adding a bolt 474 at pos  373.159 131.254
+Adding a bolt 476 at pos  383.136 124.587
+Adding a shotgun shell 478 at pos  435.309 73.8109
+Adding a shotgun shell 479 at pos  435.309 73.8109
+Adding a shotgun shell 480 at pos  435.309 73.8109
+Adding a shotgun shell 481 at pos  435.309 73.8109
+Adding a shotgun shell 482 at pos  435.309 73.8109
+Adding a shotgun shell 483 at pos  435.309 73.8109
+Adding a shotgun shell 484 at pos  435.309 73.8109
+Adding a shotgun shell 485 at pos  435.309 73.8109
+Adding a shotgun shell 486 at pos  435.309 73.8109
+Adding a shotgun shell 487 at pos  435.309 73.8109
+Adding a shotgun shell 489 at pos  456.899 90.1965
+Adding a shotgun shell 490 at pos  456.899 90.1965
+Adding a shotgun shell 491 at pos  456.899 90.1965
+Adding a shotgun shell 492 at pos  456.899 90.1965
+Adding a shotgun shell 493 at pos  456.899 90.1965
+Adding a shotgun shell 494 at pos  456.899 90.1965
+Adding a shotgun shell 495 at pos  456.899 90.1965
+Adding a shotgun shell 496 at pos  456.899 90.1965
+Adding a shotgun shell 497 at pos  456.899 90.1965
+Adding a shotgun shell 498 at pos  456.899 90.1965
+Adding a bolt 500 at pos  365.8 98.0908
+Adding a bolt 502 at pos  357.864 98.803
+Adding a bolt 504 at pos  347.083 99.3246
+Adding a shotgun shell 506 at pos  454.873 68.618
+Adding a shotgun shell 507 at pos  454.873 68.618
+Adding a shotgun shell 508 at pos  454.873 68.618
+Adding a shotgun shell 509 at pos  454.873 68.618
+Adding a shotgun shell 510 at pos  454.873 68.618
+Adding a shotgun shell 511 at pos  454.873 68.618
+Adding a shotgun shell 512 at pos  454.873 68.618
+Adding a shotgun shell 513 at pos  454.873 68.618
+Adding a shotgun shell 514 at pos  454.873 68.618
+Adding a shotgun shell 515 at pos  454.873 68.618
+Adding a bolt 517 at pos  335.502 100.97
+Adding a bolt 519 at pos  326.671 107.492
+Player Possesses bot 403
+Adding a shotgun shell 521 at pos  463.474 100.359
+Adding a shotgun shell 522 at pos  463.474 100.359
+Adding a shotgun shell 523 at pos  463.474 100.359
+Adding a shotgun shell 524 at pos  463.474 100.359
+Adding a shotgun shell 525 at pos  463.474 100.359
+Adding a shotgun shell 526 at pos  463.474 100.359
+Adding a shotgun shell 527 at pos  463.474 100.359
+Adding a shotgun shell 528 at pos  463.474 100.359
+Adding a shotgun shell 529 at pos  463.474 100.359
+Adding a shotgun shell 530 at pos  463.474 100.359
+Adding a shotgun shell 532 at pos  464.948 140.143
+Adding a shotgun shell 533 at pos  464.948 140.143
+Adding a shotgun shell 534 at pos  464.948 140.143
+Adding a shotgun shell 535 at pos  464.948 140.143
+Adding a shotgun shell 536 at pos  464.948 140.143
+Adding a shotgun shell 537 at pos  464.948 140.143
+Adding a shotgun shell 538 at pos  464.948 140.143
+Adding a shotgun shell 539 at pos  464.948 140.143
+Adding a shotgun shell 540 at pos  464.948 140.143
+Adding a shotgun shell 541 at pos  464.948 140.143
+Adding teammate with ID 543
+Adding teammate with ID 544
+Adding a shotgun shell 545 at pos  455.186 143.137
+Adding a shotgun shell 546 at pos  455.186 143.137
+Adding a shotgun shell 547 at pos  455.186 143.137
+Adding a shotgun shell 548 at pos  455.186 143.137
+Adding a shotgun shell 549 at pos  455.186 143.137
+Adding a shotgun shell 550 at pos  455.186 143.137
+Adding a shotgun shell 551 at pos  455.186 143.137
+Adding a shotgun shell 552 at pos  455.186 143.137
+Adding a shotgun shell 553 at pos  455.186 143.137
+Adding a shotgun shell 554 at pos  455.186 143.137
+Adding teammate with ID 556
+BOT 403 IS STUCK!!
+Adding a bolt 557 at pos  298.536 55.9404
+Adding a shotgun shell 559 at pos  465.471 126.964
+Adding a shotgun shell 560 at pos  465.471 126.964
+Adding a shotgun shell 561 at pos  465.471 126.964
+Adding a shotgun shell 562 at pos  465.471 126.964
+Adding a shotgun shell 563 at pos  465.471 126.964
+Adding a shotgun shell 564 at pos  465.471 126.964
+Adding a shotgun shell 565 at pos  465.471 126.964
+Adding a shotgun shell 566 at pos  465.471 126.964
+Adding a shotgun shell 567 at pos  465.471 126.964
+Adding a shotgun shell 568 at pos  465.471 126.964
+Adding a bolt 570 at pos  283.152 99.3247
+Adding a bolt 572 at pos  297.027 80.4098
+Adding a rail gun slug574 at pos  268.834 196.721
+Adding a bolt 576 at pos  306.263 120.256
+Adding a bolt 578 at pos  299.559 118.867
+Adding a shotgun shell 580 at pos  416.827 126.481
+Adding a shotgun shell 581 at pos  416.827 126.481
+Adding a shotgun shell 582 at pos  416.827 126.481
+Adding a shotgun shell 583 at pos  416.827 126.481
+Adding a shotgun shell 584 at pos  416.827 126.481
+Adding a shotgun shell 585 at pos  416.827 126.481
+Adding a shotgun shell 586 at pos  416.827 126.481
+Adding a shotgun shell 587 at pos  416.827 126.481
+Adding a shotgun shell 588 at pos  416.827 126.481
+Adding a shotgun shell 589 at pos  416.827 126.481
+Adding a bolt 591 at pos  310.605 100.267
+Adding a bolt 593 at pos  311.771 112.226
+Adding a shotgun shell 595 at pos  428.799 103.82
+Adding a shotgun shell 596 at pos  428.799 103.82
+Adding a shotgun shell 597 at pos  428.799 103.82
+Adding a shotgun shell 598 at pos  428.799 103.82
+Adding a shotgun shell 599 at pos  428.799 103.82
+Adding a shotgun shell 600 at pos  428.799 103.82
+Adding a shotgun shell 601 at pos  428.799 103.82
+Adding a shotgun shell 602 at pos  428.799 103.82
+Adding a shotgun shell 603 at pos  428.799 103.82
+Adding a shotgun shell 604 at pos  428.799 103.82
+Adding a bolt 606 at pos  310.453 120.334
+Adding a bolt 608 at pos  304.586 93.8679
+Adding a bolt 610 at pos  311.848 118.138
+Adding a bolt 612 at pos  280.012 142.848
+Adding a bolt 614 at pos  292.737 91.9772
+Adding a bolt 616 at pos  311.913 116.845
+Adding a bolt 618 at pos  297.598 93.1927
+Adding a bolt 620 at pos  312.298 116.135
+Adding a bolt 622 at pos  308.348 95.5074
+BOT 543 IS STUCK!!
+Adding a bolt 624 at pos  303.689 92.4047
+Adding a bolt 626 at pos  238.662 173.681
+Adding a rail gun slug628 at pos  278.824 224.824
+Adding a bolt 630 at pos  244.712 181.986
+Adding a bolt 632 at pos  288.762 237.333
+Adding a bolt 634 at pos  252.207 191.357
+Adding a bolt 636 at pos  296.966 246.091
+Adding a bolt 638 at pos  252.214 194.089
+Adding a rail gun slug640 at pos  301.068 250.469
+Adding a bolt 642 at pos  242.955 188.23
+Adding a rocket 644 at pos  312.609 262.399
+Adding a bolt 646 at pos  234.212 182.238
+Adding a shotgun shell 648 at pos  421.801 243.76
+Adding a shotgun shell 649 at pos  421.801 243.76
+Adding a shotgun shell 650 at pos  421.801 243.76
+Adding a shotgun shell 651 at pos  421.801 243.76
+Adding a shotgun shell 652 at pos  421.801 243.76
+Adding a shotgun shell 653 at pos  421.801 243.76
+Adding a shotgun shell 654 at pos  421.801 243.76
+Adding a shotgun shell 655 at pos  421.801 243.76
+Adding a shotgun shell 656 at pos  421.801 243.76
+Adding a shotgun shell 657 at pos  421.801 243.76
+Adding a bolt 659 at pos  226.121 174.825
+Adding a bolt 661 at pos  218.024 167.379
+Adding a rocket 663 at pos  334.444 284.404
+Adding a bolt 665 at pos  213.995 157.558
+Adding a shotgun shell 667 at pos  400.771 268.586
+Adding a shotgun shell 668 at pos  400.771 268.586
+Adding a shotgun shell 669 at pos  400.771 268.586
+Adding a shotgun shell 670 at pos  400.771 268.586
+Adding a shotgun shell 671 at pos  400.771 268.586
+Adding a shotgun shell 672 at pos  400.771 268.586
+Adding a shotgun shell 673 at pos  400.771 268.586
+Adding a shotgun shell 674 at pos  400.771 268.586
+Adding a shotgun shell 675 at pos  400.771 268.586
+Adding a shotgun shell 676 at pos  400.771 268.586
+Adding a bolt 678 at pos  211.598 147.028
+Adding a shotgun shell 680 at pos  351.487 314.028
+Adding a shotgun shell 681 at pos  351.487 314.028
+Adding a shotgun shell 682 at pos  351.487 314.028
+Adding a shotgun shell 683 at pos  351.487 314.028
+Adding a shotgun shell 684 at pos  351.487 314.028
+Adding a shotgun shell 685 at pos  351.487 314.028
+Adding a shotgun shell 686 at pos  351.487 314.028
+Adding a shotgun shell 687 at pos  351.487 314.028
+Adding a shotgun shell 688 at pos  351.487 314.028
+Adding a shotgun shell 689 at pos  351.487 314.028
+Adding a shotgun shell 691 at pos  378.361 277.375
+Adding a shotgun shell 692 at pos  378.361 277.375
+Adding a shotgun shell 693 at pos  378.361 277.375
+Adding a shotgun shell 694 at pos  378.361 277.375
+Adding a shotgun shell 695 at pos  378.361 277.375
+Adding a shotgun shell 696 at pos  378.361 277.375
+Adding a shotgun shell 697 at pos  378.361 277.375
+Adding a shotgun shell 698 at pos  378.361 277.375
+Adding a shotgun shell 699 at pos  378.361 277.375
+Adding a shotgun shell 700 at pos  378.361 277.375
+Adding a shotgun shell 702 at pos  319.855 319.373
+Adding a shotgun shell 703 at pos  319.855 319.373
+Adding a shotgun shell 704 at pos  319.855 319.373
+Adding a shotgun shell 705 at pos  319.855 319.373
+Adding a shotgun shell 706 at pos  319.855 319.373
+Adding a shotgun shell 707 at pos  319.855 319.373
+Adding a shotgun shell 708 at pos  319.855 319.373
+Adding a shotgun shell 709 at pos  319.855 319.373
+Adding a shotgun shell 710 at pos  319.855 319.373
+Adding a shotgun shell 711 at pos  319.855 319.373
+Adding a shotgun shell 713 at pos  358.506 258.036
+Adding a shotgun shell 714 at pos  358.506 258.036
+Adding a shotgun shell 715 at pos  358.506 258.036
+Adding a shotgun shell 716 at pos  358.506 258.036
+Adding a shotgun shell 717 at pos  358.506 258.036
+Adding a shotgun shell 718 at pos  358.506 258.036
+Adding a shotgun shell 719 at pos  358.506 258.036
+Adding a shotgun shell 720 at pos  358.506 258.036
+Adding a shotgun shell 721 at pos  358.506 258.036
+Adding a shotgun shell 722 at pos  358.506 258.036
+Adding a shotgun shell 724 at pos  287.262 319.919
+Adding a shotgun shell 725 at pos  287.262 319.919
+Adding a shotgun shell 726 at pos  287.262 319.919
+Adding a shotgun shell 727 at pos  287.262 319.919
+Adding a shotgun shell 728 at pos  287.262 319.919
+Adding a shotgun shell 729 at pos  287.262 319.919
+Adding a shotgun shell 730 at pos  287.262 319.919
+Adding a shotgun shell 731 at pos  287.262 319.919
+Adding a shotgun shell 732 at pos  287.262 319.919
+Adding a shotgun shell 733 at pos  287.262 319.919
+Adding a shotgun shell 735 at pos  326.141 259.749
+Adding a shotgun shell 736 at pos  326.141 259.749
+Adding a shotgun shell 737 at pos  326.141 259.749
+Adding a shotgun shell 738 at pos  326.141 259.749
+Adding a shotgun shell 739 at pos  326.141 259.749
+Adding a shotgun shell 740 at pos  326.141 259.749
+Adding a shotgun shell 741 at pos  326.141 259.749
+Adding a shotgun shell 742 at pos  326.141 259.749
+Adding a shotgun shell 743 at pos  326.141 259.749
+Adding a shotgun shell 744 at pos  326.141 259.749
+Adding a shotgun shell 746 at pos  258.699 306.386
+Adding a shotgun shell 747 at pos  258.699 306.386
+Adding a shotgun shell 748 at pos  258.699 306.386
+Adding a shotgun shell 749 at pos  258.699 306.386
+Adding a shotgun shell 750 at pos  258.699 306.386
+Adding a shotgun shell 751 at pos  258.699 306.386
+Adding a shotgun shell 752 at pos  258.699 306.386
+Adding a shotgun shell 753 at pos  258.699 306.386
+Adding a shotgun shell 754 at pos  258.699 306.386
+Adding a shotgun shell 755 at pos  258.699 306.386
+Adding a shotgun shell 757 at pos  293.543 259.976
+Adding a shotgun shell 758 at pos  293.543 259.976
+Adding a shotgun shell 759 at pos  293.543 259.976
+Adding a shotgun shell 760 at pos  293.543 259.976
+Adding a shotgun shell 761 at pos  293.543 259.976
+Adding a shotgun shell 762 at pos  293.543 259.976
+Adding a shotgun shell 763 at pos  293.543 259.976
+Adding a shotgun shell 764 at pos  293.543 259.976
+Adding a shotgun shell 765 at pos  293.543 259.976
+Adding a shotgun shell 766 at pos  293.543 259.976
+Adding a shotgun shell 768 at pos  234.69 284.37
+Adding a shotgun shell 769 at pos  234.69 284.37
+Adding a shotgun shell 770 at pos  234.69 284.37
+Adding a shotgun shell 771 at pos  234.69 284.37
+Adding a shotgun shell 772 at pos  234.69 284.37
+Adding a shotgun shell 773 at pos  234.69 284.37
+Adding a shotgun shell 774 at pos  234.69 284.37
+Adding a shotgun shell 775 at pos  234.69 284.37
+Adding a shotgun shell 776 at pos  234.69 284.37
+Adding a shotgun shell 777 at pos  234.69 284.37
+Adding a bolt 779 at pos  316.649 87.4367
+Adding a shotgun shell 781 at pos  191.764 248.131
+Adding a shotgun shell 782 at pos  191.764 248.131
+Adding a shotgun shell 783 at pos  191.764 248.131
+Adding a shotgun shell 784 at pos  191.764 248.131
+Adding a shotgun shell 785 at pos  191.764 248.131
+Adding a shotgun shell 786 at pos  191.764 248.131
+Adding a shotgun shell 787 at pos  191.764 248.131
+Adding a shotgun shell 788 at pos  191.764 248.131
+Adding a shotgun shell 789 at pos  191.764 248.131
+Adding a shotgun shell 790 at pos  191.764 248.131
+Adding a shotgun shell 792 at pos  216.123 259.056
+Adding a shotgun shell 793 at pos  216.123 259.056
+Adding a shotgun shell 794 at pos  216.123 259.056
+Adding a shotgun shell 795 at pos  216.123 259.056
+Adding a shotgun shell 796 at pos  216.123 259.056
+Adding a shotgun shell 797 at pos  216.123 259.056
+Adding a shotgun shell 798 at pos  216.123 259.056
+Adding a shotgun shell 799 at pos  216.123 259.056
+Adding a shotgun shell 800 at pos  216.123 259.056
+Adding a shotgun shell 801 at pos  216.123 259.056
+Adding a bolt 803 at pos  327.506 97.7854
+Adding a shotgun shell 805 at pos  174.424 226.896
+Adding a shotgun shell 806 at pos  174.424 226.896
+Adding a shotgun shell 807 at pos  174.424 226.896
+Adding a shotgun shell 808 at pos  174.424 226.896
+Adding a shotgun shell 809 at pos  174.424 226.896
+Adding a shotgun shell 810 at pos  174.424 226.896
+Adding a shotgun shell 811 at pos  174.424 226.896
+Adding a shotgun shell 812 at pos  174.424 226.896
+Adding a shotgun shell 813 at pos  174.424 226.896
+Adding a shotgun shell 814 at pos  174.424 226.896
+Adding a shotgun shell 816 at pos  200.666 237.554
+Adding a shotgun shell 817 at pos  200.666 237.554
+Adding a shotgun shell 818 at pos  200.666 237.554
+Adding a shotgun shell 819 at pos  200.666 237.554
+Adding a shotgun shell 820 at pos  200.666 237.554
+Adding a shotgun shell 821 at pos  200.666 237.554
+Adding a shotgun shell 822 at pos  200.666 237.554
+Adding a shotgun shell 823 at pos  200.666 237.554
+Adding a shotgun shell 824 at pos  200.666 237.554
+Adding a shotgun shell 825 at pos  200.666 237.554
+Adding a bolt 828 at pos  353.255 81.2267
+Adding a bolt 830 at pos  328.731 105.345
+Adding a bolt 832 at pos  350.68 70.5504
+Adding a bolt 834 at pos  325.779 94.827
+Adding a bolt 836 at pos  350.249 63.2836
+Adding a bolt 838 at pos  323.405 84.9964
+Adding a bolt 840 at pos  358.468 70.2489
+Adding a bolt 842 at pos  366.803 77.4276
+Adding a bolt 844 at pos  339.575 96.9442
+Adding a shotgun shell 846 at pos  285.084 144.914
+Adding a shotgun shell 847 at pos  285.084 144.914
+Adding a shotgun shell 848 at pos  285.084 144.914
+Adding a shotgun shell 849 at pos  285.084 144.914
+Adding a shotgun shell 850 at pos  285.084 144.914
+Adding a shotgun shell 851 at pos  285.084 144.914
+Adding a shotgun shell 852 at pos  285.084 144.914
+Adding a shotgun shell 853 at pos  285.084 144.914
+Adding a shotgun shell 854 at pos  285.084 144.914
+Adding a shotgun shell 855 at pos  285.084 144.914
+Adding a bolt 857 at pos  327.386 80.9043
+Adding a bolt 859 at pos  341.997 80.037
+Adding a bolt 861 at pos  368.89 97.1359
+Adding a bolt 863 at pos  333.925 97.897
+Adding a shotgun shell 865 at pos  311.341 117.368
+Adding a shotgun shell 866 at pos  311.341 117.368
+Adding a shotgun shell 867 at pos  311.341 117.368
+Adding a shotgun shell 868 at pos  311.341 117.368
+Adding a shotgun shell 869 at pos  311.341 117.368
+Adding a shotgun shell 870 at pos  311.341 117.368
+Adding a shotgun shell 871 at pos  311.341 117.368
+Adding a shotgun shell 872 at pos  311.341 117.368
+Adding a shotgun shell 873 at pos  311.341 117.368
+Adding a shotgun shell 874 at pos  311.341 117.368
+Adding a bolt 876 at pos  333.728 83.9013
+Adding a bolt 878 at pos  393.751 99.4203
+Adding a bolt 880 at pos  57.0844 103.38
+Adding a bolt 882 at pos  404.158 99.0229
+Adding a bolt 884 at pos  391.397 80.0015
+Adding a bolt 886 at pos  413.738 94.4917
+Adding a bolt 888 at pos  402.05 79.7377
+Adding a bolt 890 at pos  424.573 92.7566
+Adding a bolt 892 at pos  410.925 78.5963
+Adding a bolt 894 at pos  345.965 120.873
+Adding a bolt 896 at pos  433.795 87.3117
+Adding a shotgun shell 898 at pos  280.569 71.1741
+Adding a shotgun shell 899 at pos  280.569 71.1741
+Adding a shotgun shell 900 at pos  280.569 71.1741
+Adding a shotgun shell 901 at pos  280.569 71.1741
+Adding a shotgun shell 902 at pos  280.569 71.1741
+Adding a shotgun shell 903 at pos  280.569 71.1741
+Adding a shotgun shell 904 at pos  280.569 71.1741
+Adding a shotgun shell 905 at pos  280.569 71.1741
+Adding a shotgun shell 906 at pos  280.569 71.1741
+Adding a shotgun shell 907 at pos  280.569 71.1741
+Adding a bolt 909 at pos  416.347 77.4844
+Adding a rocket 911 at pos  351.662 113.846
+Adding a bolt 913 at pos  443.105 76.8856
+Adding a bolt 915 at pos  422.741 77.5482
+Adding a rocket 917 at pos  261.787 62.1233
+Adding a bolt 919 at pos  446.745 66.9588
+Adding a bolt 921 at pos  421.975 86.5234
+Adding a shotgun shell 923 at pos  446.988 60.9664
+Adding a shotgun shell 924 at pos  446.988 60.9664
+Adding a shotgun shell 925 at pos  446.988 60.9664
+Adding a shotgun shell 926 at pos  446.988 60.9664
+Adding a shotgun shell 927 at pos  446.988 60.9664
+Adding a shotgun shell 928 at pos  446.988 60.9664
+Adding a shotgun shell 929 at pos  446.988 60.9664
+Adding a shotgun shell 930 at pos  446.988 60.9664
+Adding a shotgun shell 931 at pos  446.988 60.9664
+Adding a shotgun shell 932 at pos  446.988 60.9664
+Adding a rocket 934 at pos  365.511 88.7756
+Adding a bolt 936 at pos  420.746 97.4535
+Adding a bolt 938 at pos  421.85 93.5762
+Adding a rocket 940 at pos  370.353 67.4436
+Adding a bolt 
+942 at pos  423.973 82.787
+Adding a bolt 944 at pos  425.062 82.4941
+Adding a rail gun slug946 at pos  88.6954 151.802
+Adding a bolt 948 at pos  81.7215 140.935
+Adding a shotgun shell 950 at pos  388.704 59.4597
+Adding a shotgun shell 951 at pos  388.704 59.4597
+Adding a shotgun shell 952 at pos  388.704 59.4597
+Adding a shotgun shell 953 at pos  388.704 59.4597
+Adding a shotgun shell 954 at pos  388.704 59.4597
+Adding a shotgun shell 955 at pos  388.704 59.4597
+Adding a shotgun shell 956 at pos  388.704 59.4597
+Adding a shotgun shell 957 at pos  388.704 59.4597
+Adding a shotgun shell 958 at pos  388.704 59.4597
+Adding a shotgun shell 959 at pos  388.704 59.4597
+Adding a bolt 962 at pos  79.3718 131.848
+Adding a bolt 964 at pos  73.0798 123.5
+Adding a bolt 966 at pos  66.3127 114.979
+Adding a bolt 968 at pos  42.6978 85.2454
+BOT 544 IS STUCK!!
+Adding a bolt 970 at pos  42.6977 85.2454
+Adding a bolt 972 at pos  42.6977 85.2454
+Adding a bolt 974 at pos  76.027 38.6214
+Adding a bolt 976 at pos  42.6977 85.2454
+Adding a bolt 978 at pos  42.6977 85.2454
+
+------------------------------ Clearup -------------------------------
+deleting entity id: 401 of type bot(1)
+deleting raven bot (id = 401)
+deleting entity id: 402 of type bot(1)
+deleting raven bot (id = 402)
+deleting entity id: 403 of type bot(1)
+deleting raven bot (id = 403)
+deleting entity id: 543 of type bot(1)
+deleting raven bot (id = 543)
+deleting entity id: 544 of type bot(1)
+deleting raven bot (id = 544)
+deleting entity id: 556 of type bot(1)
+deleting raven bot (id = 556)

@@ -5,7 +5,8 @@
 Trigger_InventoryGiver::Trigger_InventoryGiver(int id, std::vector<WeaponData*> inventory, Vector2D position, int nodeIndex) : Trigger<Raven_Bot>(id),
                                                                                                                                mInventory(inventory)
 {
-    AddCircularTriggerRegion(position, 1);
+    AddCircularTriggerRegion(position, 10);
+    AddRectangularTriggerRegion(Pos() = Vector2D(10, 0), Pos() = Vector2D(0, 10));
     SetGraphNodeIndex(nodeIndex);
     SetPos(position);
 
