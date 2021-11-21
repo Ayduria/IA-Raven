@@ -9,7 +9,7 @@ class Trigger_InventoryGiver :  public Trigger<Raven_Bot>
 	std::vector<WeaponData*> mInventory;
 	// Position of death
 	Vector2D mPosition;
-	//vrtex buffers for rocket shape
+	// vrtex buffers for rocket shape
 	std::vector<Vector2D>         m_vecRLVB;
 	std::vector<Vector2D>         m_vecRLVBTrans;
 
