@@ -61,6 +61,11 @@ BEGIN
         MENUITEM "Show Goal Queue",             IDM_BOTS_SHOW_GOAL_Q
         MENUITEM "Show Path",                   IDM_NAVIGATION_SHOW_PATH
     END
+    POPUP "Neural Network"
+    BEGIN
+        MENUITEM "Enable Learning Process",     IDM_NEURALNET_ENABLELP
+        MENUITEM "Load data.rambo",             IDM_NEURALNET_LOAD
+    END
 END
 
 

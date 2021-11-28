@@ -216,7 +216,10 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CData.cpp" />
+    <ClCompile Include="CNeuralNet.cpp" />
     <ClCompile Include="Goal_ThinkTeammate.cpp" />
+    <ClCompile Include="LearningBot.cpp" />
     <ClCompile Include="main.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -536,7 +539,10 @@
     <ClCompile Include="Trigger_InventoryGiver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CData.h" />
+    <ClInclude Include="CNeuralNet.h" />
     <ClInclude Include="Goal_ThinkTeammate.h" />
+    <ClInclude Include="LearningBot.h" />
     <ClInclude Include="Raven_Bot.h" />
     <ClInclude Include="Raven_Game.h" />
     <ClInclude Include="Raven_Map.h" />
@@ -666,6 +672,5 @@
     </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
