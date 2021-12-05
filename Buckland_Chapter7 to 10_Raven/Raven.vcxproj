@@ -216,6 +216,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Goal_Flee.cpp" />
     <ClCompile Include="Goal_ThinkTeammate.cpp" />
     <ClCompile Include="main.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -536,6 +537,7 @@
     <ClCompile Include="Trigger_InventoryGiver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Goal_Flee.h" />
     <ClInclude Include="Goal_ThinkTeammate.h" />
     <ClInclude Include="Raven_Bot.h" />
     <ClInclude Include="Raven_Game.h" />

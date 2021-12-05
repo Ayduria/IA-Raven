@@ -22,10 +22,10 @@ enum
   goal_negotiate_door,
   goal_attack_target,
   goal_hunt_target,
+  goal_flee,
   goal_strafe,
   goal_adjust_range,
   goal_say_phrase
-  
 };
 
 class GoalTypeToString : public TypeToString

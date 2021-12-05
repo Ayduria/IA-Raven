@@ -7,6 +7,9 @@
 #include "Messaging/MessageDispatcher.h"
 #include "../Raven_SensoryMemory.h"
 
+#include "Raven_Feature.h"
+#include "../Goal_Flee.h"
+
 
 
 //------------------------------- Activate ------------------------------------
@@ -28,34 +31,19 @@ void Goal_AttackTarget::Activate()
      return;
   }
 
-  // Send message to teammates if leader
-  /*if (m_pOwner->isLeader())
-  {
-      std::vector<int> teammatesIDs = m_pOwner->GetTeammatesIDs();
-      if (teammatesIDs.size() > 0)
-      {
-          Raven_Bot* target = m_pOwner->GetTargetSys()->GetTarget();
-          if (target != m_pOwner)
-          {
-              MemorySlice* slice = m_pOwner->GetSensoryMem()->GetMemorySliceOfOpponent(target);
-              for (size_t i = 0; i < teammatesIDs.size(); i++)
-              {
-                  Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
-                      m_pOwner->ID(),
-                      teammatesIDs[i],
-                      Msg_YoTeamINeedHelp,
-                      (void*)slice);
-              }
-          }
-      }
-  }*/
+  // if bot is low on health then stop attacking and attempt to flee from altercation
+  if (Raven_Feature::Health(m_pOwner) <= 0.40) {
+      AddSubgoal(new Goal_Flee(m_pOwner));
+      m_iStatus = completed;
+      return;
+  }
 
   //if the bot is able to shoot the target (there is LOS between bot and
   //target), then select a tactic to follow while shooting
   if (m_pOwner->GetTargetSys()->isTargetShootable())
   {
-    //if the bot has space to strafe then do so
     Vector2D dummy;
+    //if the bot has space to strafe then do so
     if (m_pOwner->canStepLeft(dummy) || m_pOwner->canStepRight(dummy))
     {
       AddSubgoal(new Goal_DodgeSideToSide(m_pOwner));

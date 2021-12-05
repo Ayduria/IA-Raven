@@ -277,6 +277,9 @@
     <ClCompile Include="Trigger_InventoryGiver.cpp">
       <Filter>AI\Triggers</Filter>
     </ClCompile>
+    <ClCompile Include="Goal_Flee.cpp">
+      <Filter>AI\goals\composite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raven_Bot.h">
@@ -623,6 +626,9 @@
     </ClInclude>
     <ClInclude Include="Trigger_InventoryGiver.h">
       <Filter>AI\Triggers</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal_Flee.h">
+      <Filter>AI\goals\composite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
