@@ -75,6 +75,10 @@ std::string GoalTypeToString::Convert(int gt)
 
     return "hunt_target";
 
+  case goal_flee:
+
+      return "flee";
+
   case goal_strafe:
 
     return "strafe";
