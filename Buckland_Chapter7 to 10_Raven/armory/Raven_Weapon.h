@@ -145,7 +145,7 @@ inline bool Raven_Weapon::isReadyForNextShot()
   {
     return true;
   }
-
+  object obj;
   return false;
 }
 
