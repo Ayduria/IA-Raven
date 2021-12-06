@@ -25,7 +25,8 @@ enum
   goal_flee,
   goal_strafe,
   goal_adjust_range,
-  goal_say_phrase
+  goal_say_phrase,
+  goal_get_grenade
 };
 
 class GoalTypeToString : public TypeToString

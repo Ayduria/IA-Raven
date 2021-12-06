@@ -12,6 +12,9 @@ class Trigger_InventoryGiver :  public Trigger<Raven_Bot>
 	// vrtex buffers for rocket shape
 	std::vector<Vector2D>         m_vecRLVB;
 	std::vector<Vector2D>         m_vecRLVBTrans;
+	//vrtex buffers for grenade shape
+	std::vector<Vector2D>         m_vecGNVB;
+	std::vector<Vector2D>         m_vecGNVBTrans;
 
 public:
 	Trigger_InventoryGiver(int id, std::vector<WeaponData*> inventory, Vector2D position, int nodeIndex);

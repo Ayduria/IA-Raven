@@ -292,6 +292,12 @@
     <ClCompile Include="Goal_Flee.cpp">
       <Filter>AI\goals\composite</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon_Grenade.cpp">
+      <Filter>Game\weapons &amp; projectiles\weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile_Bomb.cpp">
+      <Filter>Game\weapons &amp; projectiles\projectiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raven_Bot.h">
@@ -638,6 +644,13 @@
     </ClInclude>
     <ClInclude Include="Trigger_InventoryGiver.h">
       <Filter>AI\Triggers</Filter>
+    </ClInclude>
+    <ClInclude Include="LearningBot.h" />
+    <ClInclude Include="Weapon_Grenade.h">
+      <Filter>Game\weapons &amp; projectiles\weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile_Bomb.h">
+      <Filter>Game\weapons &amp; projectiles\projectiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

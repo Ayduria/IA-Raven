@@ -30,6 +30,7 @@ Goal_ThinkTeammate::Goal_ThinkTeammate(Raven_Bot* pBot, int goalType): Goal_Thin
     double ShotgunBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
     double RocketLauncherBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
     double RailgunBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
+    double GrenadeBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
     double ExploreBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
     double AttackBias = 5;
 
@@ -44,4 +45,6 @@ Goal_ThinkTeammate::Goal_ThinkTeammate(Raven_Bot* pBot, int goalType): Goal_Thin
         type_rail_gun));
     m_Evaluators.push_back(new GetWeaponGoal_Evaluator(RocketLauncherBias,
         type_rocket_launcher));
+    m_Evaluators.push_back(new GetWeaponGoal_Evaluator(GrenadeBias,
+        type_grenade));
 }

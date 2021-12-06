@@ -171,6 +171,7 @@ public:
   void AddRailGunSlug(Raven_Bot* shooter, Vector2D target);
   void AddShotGunPellet(Raven_Bot* shooter, Vector2D target);
   void AddBolt(Raven_Bot* shooter, Vector2D target);
+  void AddBomb(Raven_Bot* shooter, Vector2D target);
 
   // Load the rambo data
   void EnablePopulationOfRambo() { m_CanPopulateRamboData = true; }

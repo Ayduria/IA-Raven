@@ -31,6 +31,32 @@ Trigger_WeaponGiver::Trigger_WeaponGiver(std::ifstream& datafile):
   {
     m_vecRLVB.push_back(rip[i]);
   }
+
+  //create the vertex buffer for the grenade
+  const int NumGrenadeVerts = 17;
+  const Vector2D gip[NumGrenadeVerts] = { Vector2D(0, 6),
+                                       Vector2D(4, 5),
+                                       Vector2D(6, 2),
+                                       Vector2D(6, -2),
+                                       Vector2D(4, -5),
+                                       Vector2D(0, -6),
+                                       Vector2D(-4, -5),
+                                       Vector2D(-6, -2),
+                                       Vector2D(-6, 2),
+                                       Vector2D(-4, 5),
+                                       Vector2D(0, 6),
+                                       Vector2D(0, 10),
+                                       Vector2D(-2, 10),
+                                       Vector2D(2, 10),
+                                       Vector2D(4, 8),
+                                       Vector2D(2, 10),
+                                       Vector2D(0, 10),
+  };
+
+  for (int i = 0; i < NumGrenadeVerts; ++i)
+  {
+      m_vecGNVB.push_back(gip[i]);
+  }
 }
 
 
@@ -112,6 +138,23 @@ void Trigger_WeaponGiver::Render()
         }
       
         break;
+
+      case type_grenade:
+      {
+
+          Vector2D facing(-1, 0);
+
+          m_vecGNVBTrans = WorldTransform(m_vecGNVB,
+              Pos(),
+              facing,
+              facing.Perp(),
+              Vector2D(0.8, 0.8));
+
+          gdi->ThickBlackPen();
+          gdi->ClosedShape(m_vecGNVBTrans);
+      }
+
+      break;
 
     }//end switch
   }

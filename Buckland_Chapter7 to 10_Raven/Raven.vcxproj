@@ -226,6 +226,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='boundschecker|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Projectile_Bomb.cpp" />
     <ClCompile Include="Raven_Bot.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -538,10 +539,12 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='boundschecker|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="Trigger_InventoryGiver.cpp" />
+    <ClCompile Include="Weapon_Grenade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goal_ThinkTeammate.h" />
     <ClInclude Include="LearningBot.h" />
+    <ClInclude Include="Projectile_Bomb.h" />
     <ClInclude Include="Raven_Bot.h" />
     <ClInclude Include="Raven_Game.h" />
     <ClInclude Include="Raven_Map.h" />
@@ -656,6 +659,7 @@
     <ClInclude Include="..\Common\2D\WallIntersectionTests.h" />
     <ClInclude Include="..\Common\misc\WindowUtils.h" />
     <ClInclude Include="Trigger_InventoryGiver.h" />
+    <ClInclude Include="Weapon_Grenade.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Params.lua" />

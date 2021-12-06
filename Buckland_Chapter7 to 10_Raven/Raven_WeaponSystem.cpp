@@ -3,6 +3,7 @@
 #include "armory/Weapon_RailGun.h"
 #include "armory/Weapon_ShotGun.h"
 #include "armory/Weapon_Blaster.h"
+#include "Weapon_Grenade.h"
 #include "Raven_Bot.h"
 #include "misc/utils.h"
 #include "lua/Raven_Scriptor.h"
@@ -59,6 +60,7 @@ void Raven_WeaponSystem::Initialize()
   m_WeaponMap[type_shotgun]         = 0;
   m_WeaponMap[type_rail_gun]        = 0;
   m_WeaponMap[type_rocket_launcher] = 0;
+  m_WeaponMap[type_grenade] = 0;
 }
 
 void Raven_WeaponSystem::InitializeFuzzyModule() {
@@ -174,6 +176,10 @@ void  Raven_WeaponSystem::AddWeapon(unsigned int weapon_type)
 
     w = new RocketLauncher(m_pOwner); break;
 
+  case type_grenade:
+
+    w = new Grenade(m_pOwner); break;
+
   }//end switch
 
   //if the bot already holds a weapon of this type, just add its ammo
@@ -210,6 +216,10 @@ void Raven_WeaponSystem::AddWeapon(WeaponData* weapon)
     case type_rocket_launcher:
 
         w = new RocketLauncher(m_pOwner); break;
+
+    case type_grenade:
+
+        w = new Grenade(m_pOwner); break;
 
     }//end switch
 
@@ -274,7 +284,8 @@ bool Raven_WeaponSystem::TakeAimAndShoot()
     //must be adjusted to take into account the predicted movement of the 
     //target
     if (GetCurrentWeapon()->GetType() == type_rocket_launcher ||
-        GetCurrentWeapon()->GetType() == type_blaster)
+        GetCurrentWeapon()->GetType() == type_blaster ||
+        GetCurrentWeapon()->GetType() == type_grenade)
     {
       AimingPos = PredictFuturePositionOfTarget();
 
