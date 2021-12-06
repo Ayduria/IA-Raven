@@ -6,17 +6,20 @@
 #include "../lua/Raven_Scriptor.h"
 
 #include "Goal_MoveToPosition.h"
+#include "../Goal_Scavenge.h"
 #include "Goal_Explore.h"
 #include "Goal_GetItem.h"
 #include "Goal_Wander.h"
 #include "Raven_Goal_Types.h"
 #include "Goal_AttackTarget.h"
-
+#include "Messaging/Telegram.h"
+#include "..\Raven_Messages.h"
 
 #include "GetWeaponGoal_Evaluator.h"
 #include "GetHealthGoal_Evaluator.h"
 #include "ExploreGoal_Evaluator.h"
 #include "AttackTargetGoal_Evaluator.h"
+#include "../ScavengeGoal_Evaluator.h"
 
 
 Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(pBot, goalType)
@@ -33,6 +36,7 @@ Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(
   double RailgunBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
   double ExploreBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
   double AttackBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
+  double ScavengeBias = 1.5; //RandInRange(LowRangeOfBias, HighRangeOfBias);
 
   //create the evaluator objects
   m_Evaluators.push_back(new GetHealthGoal_Evaluator(HealthBias));
@@ -44,6 +48,7 @@ Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(
                                                      type_rail_gun));
   m_Evaluators.push_back(new GetWeaponGoal_Evaluator(RocketLauncherBias,
                                                      type_rocket_launcher));
+  m_Evaluators.push_back(new ScavengeGoal_Evaluator(ScavengeBias));
 }
 
 //----------------------------- dtor ------------------------------------------
@@ -134,6 +139,11 @@ bool Goal_Think::notPresent(unsigned int GoalType)const
   return true;
 }
 
+void Goal_Think::AddGoal_Scavenge(Vector2D pos)
+{
+  AddSubgoal(new Goal_Scavenge(m_pOwner, pos));
+}
+
 void Goal_Think::AddGoal_MoveToPosition(Vector2D pos)
 {
   AddSubgoal( new Goal_MoveToPosition(m_pOwner, pos));
@@ -173,7 +183,31 @@ void Goal_Think::QueueGoal_MoveToPosition(Vector2D pos)
    m_SubGoals.push_back(new Goal_MoveToPosition(m_pOwner, pos));
 }
 
+bool Goal_Think::HandleMessage(const Telegram& msg) 
+{
+    // first, pass the message down the goal hierarchy
+    // I do know goal think is the parent of all goals, but it 
+    // could change in a distant future...
+    bool bHandled = ForwardMessageToFrontMostSubgoal(msg);
 
+    // if the msg was not handled, test to see if this goal can handle it
+    if (bHandled == false)
+    {
+        switch (msg.Msg)
+        {
+            case Msg_HereMyStuff:
+            {
+                //clear any existing goals
+                RemoveAllSubgoals();
+                MyPos* pos = (MyPos*)msg.ExtraInfo;
+
+                AddGoal_Scavenge(Vector2D(pos->x, pos->y));
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 //----------------------- RenderEvaluations -----------------------------------
 //-----------------------------------------------------------------------------

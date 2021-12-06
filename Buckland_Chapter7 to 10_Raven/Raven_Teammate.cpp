@@ -52,8 +52,6 @@ void Raven_Teammate::Spawn(Vector2D pos)
 void Raven_Teammate::Update()
 {
     Raven_Bot::Update();
-
-
 }
 
 //-------------------------------- HandleMessage -------------------------------------

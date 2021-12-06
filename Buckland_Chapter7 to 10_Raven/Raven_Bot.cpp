@@ -304,14 +304,6 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
 
     return true;
 
-  case Msg_HereMyStuff:
-  {
-      MyPos* pos = (MyPos*)msg.ExtraInfo;
-      // TODO add another evaluator for inventory
-      GetBrain()->AddGoal_MoveToPosition(Vector2D(pos->x, pos->y));
-      return true;
-  }
-
   case Msg_GunshotSound:
 
     //add the source of this sound to the bot's percepts

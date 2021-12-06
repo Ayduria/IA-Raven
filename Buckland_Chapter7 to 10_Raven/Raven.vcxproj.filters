@@ -280,6 +280,12 @@
     <ClCompile Include="Goal_Flee.cpp">
       <Filter>AI\goals\composite</Filter>
     </ClCompile>
+    <ClCompile Include="ScavengeGoal_Evaluator.cpp">
+      <Filter>AI\goals\goal evaluation</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal_Scavenge.cpp">
+      <Filter>AI\goals\composite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raven_Bot.h">
@@ -628,6 +634,12 @@
       <Filter>AI\Triggers</Filter>
     </ClInclude>
     <ClInclude Include="Goal_Flee.h">
+      <Filter>AI\goals\composite</Filter>
+    </ClInclude>
+    <ClInclude Include="ScavengeGoal_Evaluator.h">
+      <Filter>AI\goals\goal evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal_Scavenge.h">
       <Filter>AI\goals\composite</Filter>
     </ClInclude>
   </ItemGroup>
