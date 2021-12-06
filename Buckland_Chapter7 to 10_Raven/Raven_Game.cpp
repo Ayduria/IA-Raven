@@ -325,6 +325,7 @@ void Raven_Game::Update()
                   {
                       if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
                       NotifyAllBotsOfRemoval(pBot);
+                      RemoveBotProjectiles(pBot->ID());
 
                       // kill all teammate
                       while (pBot->GetTeammatesIDs().size() != 0)
@@ -349,6 +350,8 @@ void Raven_Game::Update()
                           {
                               if (teammateBot == m_pSelectedBot)m_pSelectedBot = 0;
                               NotifyAllBotsOfRemoval(teammateBot);
+                              RemoveBotProjectiles(teammateBot->ID());
+                              EntityMgr->RemoveEntity(teammateBot);
 
                               // Remove teammate from leader
                               pBot->RemoveTeammate(teammateBot->ID());
@@ -364,7 +367,7 @@ void Raven_Game::Update()
                               teammateBot = 0;
                           }
                       }
-
+                      EntityMgr->RemoveEntity(pBot);
                       for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
                           if ((*it) == pBot)
                           {
@@ -398,6 +401,7 @@ void Raven_Game::Update()
               {
                   if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
                   NotifyAllBotsOfRemoval(pBot);
+                  RemoveBotProjectiles(pBot->ID());
 
                   // kill all teammate
                   while (pBot->GetTeammatesIDs().size() != 0)
@@ -422,6 +426,8 @@ void Raven_Game::Update()
                       {
                           if (teammateBot == m_pSelectedBot)m_pSelectedBot = 0;
                           NotifyAllBotsOfRemoval(teammateBot);
+                          RemoveBotProjectiles(teammateBot->ID());
+                          EntityMgr->RemoveEntity(teammateBot);
 
                           // Remove teammate from leader
                           pBot->RemoveTeammate(teammateBot->ID());
@@ -437,7 +443,7 @@ void Raven_Game::Update()
                           teammateBot = 0;
                       }
                   }
-
+                  EntityMgr->RemoveEntity(pBot);
                   for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
                       if ((*it) == pBot)
                       {
@@ -482,6 +488,8 @@ void Raven_Game::Update()
                   {
                       if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
                       NotifyAllBotsOfRemoval(pBot);
+                      RemoveBotProjectiles(pBot->ID());
+                      EntityMgr->RemoveEntity(pBot);
 
                       // Remove teammate from leader
                       Raven_Teammate* tBot = (Raven_Teammate*)pBot;
@@ -518,6 +526,8 @@ void Raven_Game::Update()
               {
                   if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
                   NotifyAllBotsOfRemoval(pBot);
+                  RemoveBotProjectiles(pBot->ID());
+                  EntityMgr->RemoveEntity(pBot);
 
                   // Remove teammate from leader
                   Raven_Teammate* tBot = (Raven_Teammate*)pBot;
@@ -556,6 +566,8 @@ void Raven_Game::Update()
           {
               if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
               NotifyAllBotsOfRemoval(pBot);
+              RemoveBotProjectiles(pBot->ID());
+              EntityMgr->RemoveEntity(pBot);
 
               for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
                   if ((*it) == pBot)
@@ -846,6 +858,32 @@ void Raven_Game::RemoveTeammate()
 void Raven_Game::RemoveRambo()
 {
     m_bRemoveRambo = true;
+}
+
+//-------------------------------RemoveBotProjectiles ------------------------------------
+//
+//  Remove all projectiles on the map send from this id
+//-----------------------------------------------------------------------------
+void Raven_Game::RemoveBotProjectiles(int id)
+{
+    //std::list<Raven_Bot*>::iterator curBot = m_Bots.begin();
+    //for (curBot; curBot != m_Bots.end(); ++curBot)
+
+    std::list<Raven_Projectile*>::iterator curW = m_Projectiles.begin();
+    while (curW != m_Projectiles.end())
+    {
+        //test for any dead projectiles and remove them if necessary
+        if ((*curW)->GetShooterID() == id)
+        {
+            delete* curW;
+
+            curW = m_Projectiles.erase(curW);
+        }
+        else
+        {
+            curW++;
+        }
+    }
 }
 
 //--------------------------- AddBolt -----------------------------------------

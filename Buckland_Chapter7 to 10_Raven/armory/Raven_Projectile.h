@@ -111,7 +111,7 @@ public:
   //may be exploding outwards from the point of impact for example)
   bool HasImpacted()const{return m_bImpacted;}
 
-
+  int GetShooterID()const { return m_iShooterID; }
 
 };
 

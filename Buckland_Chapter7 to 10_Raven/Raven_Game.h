@@ -180,6 +180,7 @@ public:
   void RemoveBot();
   void RemoveTeammate();
   void RemoveRambo();
+  void RemoveBotProjectiles(int id);
 
   void KillSelectedBot();
 
