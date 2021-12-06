@@ -23,6 +23,7 @@ enum message_type
   Msg_UserHasRemovedBot,
   Msg_YoTeamINeedHelp,
   Msg_HereMyStuff,
+  Msg_Hit,
 };
 
 //used for outputting debug info

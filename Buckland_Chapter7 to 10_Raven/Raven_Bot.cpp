@@ -161,8 +161,8 @@ void Raven_Bot::Update()
     }
 
     //this method aims the bot's current weapon at the current target
-    //and takes a shot if a shot is possible
-    m_pWeaponSys->TakeAimAndShoot();
+     //and takes a shot if a shot is possible
+    bool haveShoot = m_pWeaponSys->TakeAimAndShoot();
   }
 }
 
@@ -228,6 +228,12 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
   {
   case Msg_TakeThatMF:
 
+      Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+          ID(),
+          msg.Sender,
+          Msg_Hit,
+          NO_ADDITIONAL_INFO);
+
     //just return if already dead or spawning
     if (isDead() || isSpawning()) return true;
 
@@ -248,7 +254,7 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
       {
           teammatesIds = GetTeammatesIDs();
       }
-      else
+      else if (!isRambo())
       {
           teammatesIds = ((Raven_Teammate*)this)->GetLeader()->GetTeammatesIDs();
       }

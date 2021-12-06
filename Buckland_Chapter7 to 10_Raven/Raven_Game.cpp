@@ -1,4 +1,5 @@
 #include "Raven_Game.h"
+#include "LearningBot.h"
 #include "Raven_ObjectEnumerations.h"
 #include "misc/WindowUtils.h"
 #include "misc/Cgdi.h"
@@ -13,6 +14,7 @@
 #include "Time/PrecisionTimer.h"
 #include "Raven_SensoryMemory.h"
 #include "Raven_WeaponSystem.h"
+#include "armory/Raven_Weapon.h"
 #include "messaging/MessageDispatcher.h"
 #include "Raven_Messages.h"
 #include "GraveMarkers.h"
@@ -26,10 +28,11 @@
 #include "goals/Goal_Think.h"
 #include "goals/Raven_Goal_Types.h"
 
+#include <thread> // pour la fonction d'apprentissage
 
 
 //uncomment to write object creation/deletion to debug console
-#define  LOG_CREATIONAL_STUFF
+//#define  LOG_CREATIONAL_STUFF
 #ifdef LOG_CREATIONAL_STUFF
 #include "misc/Stream_Utility_Functions.h"
 #endif // LOG_CREATIONAL_STUFF
@@ -42,6 +45,12 @@ Raven_Game::Raven_Game():m_pSelectedBot(NULL),
                          m_bPaused(false),
                          m_bRemoveABot(false),
                          m_bRemoveATeammateBot(false),
+                         m_isRamboSpawned(false),
+                         m_estEntraine(false),
+                         m_bRemoveRambo(false),
+                         m_hasReadDataFile(false),
+                         m_loadRamboData(false),
+                         m_CanPopulateRamboData(false),
                          m_pMap(NULL),
                          m_pPathManager(NULL),
                          m_pGraveMarkers(NULL)
@@ -56,11 +65,16 @@ Raven_Game::Raven_Game():m_pSelectedBot(NULL),
   m_pHeadColorList.push_back(HeadColor::yellow);
   m_pHeadColorList.push_back(HeadColor::lightblue);
   m_pHeadColorList.push_back(HeadColor::orange);
-  m_pHeadColorList.push_back(HeadColor::red);
   m_pHeadColorList.push_back(HeadColor::white);
 
   //load in the default map
   LoadMap(script->GetString("StartMap"));
+
+  // chaque début d'un nouveau jeu. ré-initilisaliser le dataset d'entrainement
+
+  m_TrainingSet = CData();
+
+  m_LancerApprentissage = false;
 }
 
 
@@ -115,6 +129,23 @@ void Raven_Game::Clear()
 
   m_pSelectedBot = NULL;
 
+
+}
+
+void Raven_Game::TrainThread() {
+
+    m_LancerApprentissage = true;
+
+    debug_con << "lancement de l'apprentissage" << "";
+
+    m_ModeleApprentissage = CNeuralNet(m_TrainingSet.GetInputNb(), m_TrainingSet.GetTargetsNb(), NUM_HIDDEN_NEURONS, LEARNING_RATE);
+    bool isTraining = m_ModeleApprentissage.Train(&m_TrainingSet);
+
+    if (isTraining) {
+        debug_con << "Modele d'apprentissage de tir est appris" << "";
+        m_estEntraine = true;
+
+    }
 
 }
 
@@ -178,6 +209,16 @@ void Raven_Game::Update()
     //then change its status to 'respawning'
     else if ((*curBot)->isDead())
     {
+        if ((*curBot)->isRambo())
+        {
+            LearningBot* rambo = (LearningBot*)(*curBot);
+            double timeAlive = (std::clock() - rambo->GetTimerTime()) / (double)CLOCKS_PER_SEC;
+            debug_con << "Rambo: Mission failed! My score was: " << rambo->GetRamboScore() << "";
+            debug_con << "Rambo: I was on the battlefield for " << timeAlive << " seconds" << "";
+            rambo->ResetRamboScore();
+            rambo->ResetRamboTimer();
+        }
+
       //create a grave
       m_pGraveMarkers->AddGrave((*curBot)->Pos());
 
@@ -189,8 +230,67 @@ void Raven_Game::Update()
     else if ( (*curBot)->isAlive())
     {
       (*curBot)->Update();
-    }  
+
+      if ((*curBot)->isPossessed() && !m_hasReadDataFile && m_CanPopulateRamboData)
+      {
+          (*curBot)->m_vecObservation.clear();
+          (*curBot)->m_vecTarget.clear();
+
+          if ((*curBot)->GetTargetSys()->GetTarget())
+          {
+              float data_distance = ((*curBot)->Pos().Distance((*curBot)->GetTargetSys()->GetTarget()->Pos()));
+              bool data_isTargetInFov = (*curBot)->GetTargetSys()->isTargetWithinFOV();
+              int data_remainingAmmo = (*curBot)->GetWeaponSys()->GetAmmoRemainingForWeapon((*curBot)->GetWeaponSys()->GetCurrentWeapon()->GetType());
+              int data_weaponType = ((*curBot)->GetWeaponSys())->GetCurrentWeapon()->GetType();
+              int data_health = ((*curBot)->Health());
+
+              bool data_hasShoot = (*curBot)->GetHasShoot() ? 1 : 0;
+
+              if (!m_dataOutfile.is_open() && m_dataCount < 200)
+              {
+                  m_dataOutfile.open("data.rambo", ios::binary | ios::out);
+              }
+
+              //on crée un échantillon de 200 observations. Juste assez pour ne pas s'accaparer de la mémoire...
+              if (m_dataCount < m_totalDataCount && m_dataOutfile.is_open()) {
+
+                  string data_distanceString = std::to_string(data_distance);
+                  string data_remainingAmmoString = std::to_string(data_remainingAmmo);
+                  string data_weaponTypeString = std::to_string(data_weaponType);
+                  string data_healthString = std::to_string(data_health);
+
+                  //ajouter une observation au data file
+                  m_dataOutfile.write((char*)&data_distanceString, sizeof(string)); // sizeof can take a type
+                  m_dataOutfile.write((char*)&data_isTargetInFov, sizeof(bool));
+                  m_dataOutfile.write((char*)&data_remainingAmmoString, sizeof(string));
+                  m_dataOutfile.write((char*)&data_weaponTypeString, sizeof(string));
+                  m_dataOutfile.write((char*)&data_healthString, sizeof(string));
+                  m_dataOutfile.write((char*)&data_hasShoot, sizeof(bool));
+                  
+                  m_dataCount++;
+                  debug_con << "la taille du training set" << m_dataCount << "";
+                  if (m_dataCount == m_totalDataCount)
+                  {
+                      m_dataOutfile.close();
+                  }
+              }
+          }
+      }
+    }
+    (*curBot)->SetHasShoot(false);
   } 
+
+  if (m_estEntraine && !m_isRamboSpawned)
+  {
+      AddRambo();
+      m_isRamboSpawned = true;
+
+     // m_dataOutfile.open("modele.rambo");
+     // boost::archive::text_oarchive oa(m_dataOutfile);
+      //oa << m_ModeleApprentissage;
+      //m_dataOutfile.write((char*)&m_ModeleApprentissage, sizeof(m_ModeleApprentissage)); // sizeof can take a type
+      //m_dataOutfile.close();
+  }
 
   //update the triggers
   m_pMap->UpdateTriggerSystem(m_Bots);
@@ -225,6 +325,7 @@ void Raven_Game::Update()
                   {
                       if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
                       NotifyAllBotsOfRemoval(pBot);
+                      RemoveBotProjectiles(pBot->ID());
 
                       // kill all teammate
                       while (pBot->GetTeammatesIDs().size() != 0)
@@ -249,6 +350,8 @@ void Raven_Game::Update()
                           {
                               if (teammateBot == m_pSelectedBot)m_pSelectedBot = 0;
                               NotifyAllBotsOfRemoval(teammateBot);
+                              RemoveBotProjectiles(teammateBot->ID());
+                              EntityMgr->RemoveEntity(teammateBot);
 
                               // Remove teammate from leader
                               pBot->RemoveTeammate(teammateBot->ID());
@@ -264,7 +367,7 @@ void Raven_Game::Update()
                               teammateBot = 0;
                           }
                       }
-
+                      EntityMgr->RemoveEntity(pBot);
                       for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
                           if ((*it) == pBot)
                           {
@@ -298,6 +401,7 @@ void Raven_Game::Update()
               {
                   if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
                   NotifyAllBotsOfRemoval(pBot);
+                  RemoveBotProjectiles(pBot->ID());
 
                   // kill all teammate
                   while (pBot->GetTeammatesIDs().size() != 0)
@@ -322,6 +426,8 @@ void Raven_Game::Update()
                       {
                           if (teammateBot == m_pSelectedBot)m_pSelectedBot = 0;
                           NotifyAllBotsOfRemoval(teammateBot);
+                          RemoveBotProjectiles(teammateBot->ID());
+                          EntityMgr->RemoveEntity(teammateBot);
 
                           // Remove teammate from leader
                           pBot->RemoveTeammate(teammateBot->ID());
@@ -337,7 +443,7 @@ void Raven_Game::Update()
                           teammateBot = 0;
                       }
                   }
-
+                  EntityMgr->RemoveEntity(pBot);
                   for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
                       if ((*it) == pBot)
                       {
@@ -368,7 +474,7 @@ void Raven_Game::Update()
               {
                   Raven_Bot* pBot = nullptr;
                   for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
-                      if (!(*it)->isLeader())
+                      if (!(*it)->isLeader() && !(*it)->isRambo())
                       {
                           if (((Raven_Teammate*)(*it))->GetLeader()->ID() == m_pSelectedBot->ID()) // Delete only if he is a teammate of the selected bot.
                           {
@@ -382,6 +488,8 @@ void Raven_Game::Update()
                   {
                       if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
                       NotifyAllBotsOfRemoval(pBot);
+                      RemoveBotProjectiles(pBot->ID());
+                      EntityMgr->RemoveEntity(pBot);
 
                       // Remove teammate from leader
                       Raven_Teammate* tBot = (Raven_Teammate*)pBot;
@@ -407,7 +515,7 @@ void Raven_Game::Update()
           {
               Raven_Bot* pBot = nullptr;
               for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
-                  if (!(*it)->isLeader())
+                  if (!(*it)->isLeader() && !(*it)->isRambo())
                   {
                       pBot = *it;
                       break;
@@ -418,6 +526,8 @@ void Raven_Game::Update()
               {
                   if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
                   NotifyAllBotsOfRemoval(pBot);
+                  RemoveBotProjectiles(pBot->ID());
+                  EntityMgr->RemoveEntity(pBot);
 
                   // Remove teammate from leader
                   Raven_Teammate* tBot = (Raven_Teammate*)pBot;
@@ -438,6 +548,95 @@ void Raven_Game::Update()
       }
 
       m_bRemoveATeammateBot = false;
+  }
+
+  if (m_bRemoveRambo)
+  {
+      if (!m_Bots.empty())
+      {
+          Raven_Bot* pBot = nullptr;
+          for (std::list<Raven_Bot*>::reverse_iterator it = m_Bots.rbegin(); it != m_Bots.rend(); ++it) {
+              if ((*it)->isRambo())
+              {
+                  pBot = *it;
+                  break;
+              }
+          }
+          if (pBot)
+          {
+              if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
+              NotifyAllBotsOfRemoval(pBot);
+              RemoveBotProjectiles(pBot->ID());
+              EntityMgr->RemoveEntity(pBot);
+
+              for (std::list<Raven_Bot*>::iterator it = m_Bots.begin(); it != m_Bots.end(); ++it) {
+                  if ((*it) == pBot)
+                  {
+                      delete (*it);
+                      break;
+                  }
+              }
+              m_Bots.remove(pBot);
+              pBot = 0;
+          }
+      }
+  }
+
+  if ((m_dataCount >= m_totalDataCount && !m_hasReadDataFile) || (m_loadRamboData && !m_hasReadDataFile))
+  {
+      if (m_loadRamboData)
+      {
+          m_dataCount = m_totalDataCount;
+      }
+
+      m_hasReadDataFile = true;
+      m_dataInfile.open("data.rambo", ios::binary | ios::in);
+      
+      if (m_dataInfile.is_open())
+      {
+         
+
+          while (m_dataReadcount < m_dataCount)
+          {
+              m_dataInfile.read((char*)&data_distanceString, sizeof(string));
+              m_dataInfile.read((char*)&data_isTargetInFov, sizeof(bool));
+              m_dataInfile.read((char*)&data_remainingAmmoString, sizeof(string));
+              m_dataInfile.read((char*)&data_weaponTypeString, sizeof(string));
+              m_dataInfile.read((char*)&data_healthString, sizeof(string));
+              m_dataInfile.read((char*)&data_hasShoot, sizeof(bool));
+
+              data_distance = std::stof(data_distanceString);
+              data_remainingAmmo = std::stoi(data_remainingAmmoString);
+              data_weaponType = std::stoi(data_weaponTypeString);
+              data_health = std::stoi(data_healthString);
+
+              std::vector<double> m_vecObservation; //distance-target, visibilite, quantite-arme, type arme, son niveau de vie
+              std::vector<double> m_vecTarget; //classe representer sous d'un vecteur de sortie. 
+
+              m_vecObservation.push_back(data_distance);
+              m_vecObservation.push_back(data_isTargetInFov);
+              m_vecObservation.push_back(data_remainingAmmo);
+              m_vecObservation.push_back(data_weaponType);
+              m_vecObservation.push_back(data_health);
+
+              m_vecTarget.push_back(data_hasShoot);
+
+              AddData(m_vecObservation, m_vecTarget);
+              m_dataReadcount++; 
+          }
+          m_dataInfile.close();
+      }
+  }
+
+  //Lancer l'apprentissage quand le jeu de données est suffisant
+  //la fonction d'apprentissage s'effectue en parallèle : thread
+
+  if ((m_TrainingSet.GetInputSet().size() >= m_totalDataCount) & (!m_LancerApprentissage)) {
+
+      debug_con << "On passe par la" << "";
+
+      std::thread t1(&Raven_Game::TrainThread, this);
+      t1.detach();
   }
 }
 
@@ -576,6 +775,25 @@ void Raven_Game::AddTeammates(unsigned int NumTeammatesToAdd)
     }
 }
 
+void Raven_Game::AddRambo()
+{
+    Raven_Bot* rb = new LearningBot(this, Vector2D());
+    debug_con << "Instanciation d'un bot apprenant" << rb->ID() << "";
+
+    //switch the default steering behaviors on
+    rb->GetSteering()->WallAvoidanceOn();
+    rb->GetSteering()->SeparationOn();
+
+    m_Bots.push_back(rb);
+
+    //register the bot with the entity manager
+    EntityMgr->RegisterEntity(rb);
+
+#ifdef LOG_CREATIONAL_STUFF
+    debug_con << "Adding bot with ID " << ttos(rb->ID()) << "";
+#endif
+}
+
 //---------------------------- NotifyAllBotsOfRemoval -------------------------
 //
 //  when a bot is removed from the game by a user all remianing bots
@@ -595,6 +813,26 @@ void Raven_Game::NotifyAllBotsOfRemoval(Raven_Bot* pRemovedBot)const
 
     }
 }
+
+//ajout à chaque update d'un bot des données sur son cmportement
+bool Raven_Game::AddData(vector<double>& data, vector<double>& targets)
+{
+    if (data.size() > 0 && targets.size() > 0) {
+
+        if (m_TrainingSet.GetInputNb() <= 0)
+            m_TrainingSet = CData(data.size(), targets.size());
+
+        if (data.size() == m_TrainingSet.GetInputNb() && targets.size() == m_TrainingSet.GetTargetsNb()) {
+
+            m_TrainingSet.AddData(data, targets);
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
 //-------------------------------RemoveBot ------------------------------------
 //
 //  removes the last bot to be added from the game
@@ -611,6 +849,41 @@ void Raven_Game::RemoveBot()
 void Raven_Game::RemoveTeammate()
 {
     m_bRemoveATeammateBot = true;
+}
+
+//-------------------------------RemoveRambo ------------------------------------
+//
+//  removes rambo from the game
+//-----------------------------------------------------------------------------
+void Raven_Game::RemoveRambo()
+{
+    m_bRemoveRambo = true;
+}
+
+//-------------------------------RemoveBotProjectiles ------------------------------------
+//
+//  Remove all projectiles on the map send from this id
+//-----------------------------------------------------------------------------
+void Raven_Game::RemoveBotProjectiles(int id)
+{
+    //std::list<Raven_Bot*>::iterator curBot = m_Bots.begin();
+    //for (curBot; curBot != m_Bots.end(); ++curBot)
+
+    std::list<Raven_Projectile*>::iterator curW = m_Projectiles.begin();
+    while (curW != m_Projectiles.end())
+    {
+        //test for any dead projectiles and remove them if necessary
+        if ((*curW)->GetShooterID() == id)
+        {
+            delete* curW;
+
+            curW = m_Projectiles.erase(curW);
+        }
+        else
+        {
+            curW++;
+        }
+    }
 }
 
 //--------------------------- AddBolt -----------------------------------------
@@ -849,6 +1122,7 @@ void Raven_Game::ClickLeftMouseButton(POINTS p)
           m_pSelectedBot->GetTargetSys()->SetTarget(nullptr);
       }
       m_pSelectedBot->FireWeapon(POINTStoVector(p));
+      m_pSelectedBot->SetHasShoot(true);
   }
 }
 

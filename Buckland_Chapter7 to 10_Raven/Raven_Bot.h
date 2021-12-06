@@ -111,16 +111,19 @@ protected:
   //set to true to make the bot a leader
   bool								 m_bLeader = true;
 
+  bool								 m_bIsRambo = false;
+
   double							 m_customScale;
 
   //Vector of Teammates ID
   std::vector<int>					m_teammatesID;
 
+  bool								m_hasShoot;
+
   //a vertex buffer containing the bot's geometry
   std::vector<Vector2D>              m_vecBotVB;
   //the buffer for the transformed vertices
   std::vector<Vector2D>              m_vecBotVBTrans;
-
 
   //bots shouldn't be copied, only created or respawned
   Raven_Bot(const Raven_Bot&);
@@ -137,6 +140,11 @@ protected:
 
 
 public:
+
+	//apprentissage. 
+	//donnee à enregistrer décrivant une situation de comportement de l'agent 
+	std::vector<double> m_vecObservation; //distance-target, visibilite, quantite-arme, type arme, son niveau de vie
+	std::vector<double> m_vecTarget; //classe representer sous d'un vecteur de sortie. 
   
   Raven_Bot(Raven_Game* world, Vector2D pos, double customScale, int customColor);
   virtual ~Raven_Bot();
@@ -167,6 +175,7 @@ public:
 
   bool          isPossessed()const{return m_bPossessed;}
   bool			isLeader()const {return m_bLeader;}
+  bool			isRambo()const { return m_bIsRambo; }
   bool          isDead()const{return m_Status == dead;}
   bool          isAlive()const{return m_Status == alive;}
   bool          isSpawning()const{return m_Status == spawning;}
@@ -234,7 +243,11 @@ public:
   Raven_WeaponSystem* const          GetWeaponSys()const{return m_pWeaponSys;}
   Raven_SensoryMemory* const         GetSensoryMem()const{return m_pSensoryMem;}
 
+  std::vector<double> GetDataShoot() { return m_vecObservation; }
+  std::vector<double> GetTargetShoot() { return m_vecTarget; }
 
+  bool		GetHasShoot() { return m_hasShoot; }
+  void		SetHasShoot(bool hasShoot) { m_hasShoot = hasShoot; }
 };
 
 

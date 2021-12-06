@@ -77,6 +77,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>{f3f5ab42-49d8-4348-aa63-66655abd9be1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\NeuralNetwork">
+      <UniqueIdentifier>{d7db77ba-3104-46cd-be7b-2c4f852476bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -276,6 +279,15 @@
     </ClCompile>
     <ClCompile Include="Trigger_InventoryGiver.cpp">
       <Filter>AI\Triggers</Filter>
+    </ClCompile>
+    <ClCompile Include="CData.cpp">
+      <Filter>Game\NeuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="CNeuralNet.cpp">
+      <Filter>Game\NeuralNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="LearningBot.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Goal_Flee.cpp">
       <Filter>AI\goals\composite</Filter>
@@ -626,9 +638,6 @@
     </ClInclude>
     <ClInclude Include="Trigger_InventoryGiver.h">
       <Filter>AI\Triggers</Filter>
-    </ClInclude>
-    <ClInclude Include="Goal_Flee.h">
-      <Filter>AI\goals\composite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

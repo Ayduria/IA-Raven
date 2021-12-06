@@ -25,6 +25,8 @@
 #define IDM_GAME_PAUSE                  40017
 #define IDM_GAME_ADDTEAMMATE            40019
 #define IDM_GAME_REMOVETEAMMATE         40020
+#define IDM_NEURALNET_ENABLELP			40021
+#define IDM_NEURALNET_LOAD				40022
 
 // Next default values for new objects
 // 

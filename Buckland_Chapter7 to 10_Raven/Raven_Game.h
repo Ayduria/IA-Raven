@@ -26,6 +26,8 @@
 #include "Raven_Bot.h"
 #include "Raven_Teammate.h"
 #include "navigation/pathmanager.h"
+#include "CData.h"
+#include "CNeuralNet.h"
 
 
 class BaseGameEntity;
@@ -72,6 +74,35 @@ private:
   //this class manages all the path planning requests
   PathManager<Raven_PathPlanner>*  m_pPathManager;
 
+  std::ofstream                    m_dataOutfile;
+
+  int                              m_dataCount = 0;
+
+  std::ifstream                    m_dataInfile;
+
+  int                              m_dataReadcount = 0;
+
+  bool                             m_hasReadDataFile = false;
+
+  int                              m_totalDataCount = 300;
+
+  bool                             m_loadRamboData = false;
+
+  bool                             m_CanPopulateRamboData = false;
+
+
+  float data_distance;
+  bool data_isTargetInFov;
+  int data_remainingAmmo;
+  int data_weaponType;
+  int data_health;
+
+  bool data_hasShoot;
+
+  string data_distanceString;
+  string data_remainingAmmoString;
+  string data_weaponTypeString;
+  string data_healthString;
 
   //if true the game will be paused
   bool                             m_bPaused;
@@ -81,6 +112,11 @@ private:
 
   //if true a teammate bot is removed from the game
   bool                             m_bRemoveATeammateBot;
+
+  //if true kill rambo forever
+  bool                             m_bRemoveRambo;
+
+  bool                             m_isRamboSpawned;
 
   //when a bot is killed a "grave" is displayed for a few seconds. This
   //class manages the graves
@@ -103,9 +139,21 @@ private:
 
   //Add bot head color that we removed back into the list
   void AddBotHeadColorBack(int botHeadColor);
+
+  CData m_TrainingSet; //jeu d'apprentissage
+
+  bool m_LancerApprentissage; // pour lancer l'apprentissage
+
+  CNeuralNet m_ModeleApprentissage;
+
+  bool AddData(vector<double>& data, vector<double>& targets);
+
+  void TrainThread();
+
+  bool m_estEntraine;
   
 public:
-  
+
   Raven_Game();
   ~Raven_Game();
 
@@ -118,16 +166,26 @@ public:
 
   void AddBots(unsigned int NumBotsToAdd);
   void AddTeammates(unsigned int NumTeammatesToAdd);
+  void AddRambo();
   void AddRocket(Raven_Bot* shooter, Vector2D target);
   void AddRailGunSlug(Raven_Bot* shooter, Vector2D target);
   void AddShotGunPellet(Raven_Bot* shooter, Vector2D target);
   void AddBolt(Raven_Bot* shooter, Vector2D target);
 
+  // Load the rambo data
+  void EnablePopulationOfRambo() { m_CanPopulateRamboData = true; }
+  void LoadRamboData() { m_loadRamboData = true; }
+
   //removes the last bot to be added
   void RemoveBot();
   void RemoveTeammate();
+  void RemoveRambo();
+  void RemoveBotProjectiles(int id);
 
   void KillSelectedBot();
+
+  // Check
+  bool IsCurrentlyPopulating() { return (m_CanPopulateRamboData && !m_hasReadDataFile); }
 
   //returns true if a bot of size BoundingRadius cannot move from A to B
   //without bumping into world geometry
@@ -179,6 +237,8 @@ public:
   void        GetPlayerInput()const;
   Raven_Bot*  PossessedBot()const{return m_pSelectedBot;}
   void        ChangeWeaponOfPossessedBot(unsigned int weapon)const;
+
+  CNeuralNet getModeleApprentissage() { return m_ModeleApprentissage; }
 
   
   const Raven_Map* const                   GetMap()const{return m_pMap;}

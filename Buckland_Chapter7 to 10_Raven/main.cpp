@@ -114,6 +114,19 @@ LRESULT CALLBACK WindowProc (HWND   hwnd,
       }
 
       break;
+    case WM_CLOSE:
+    {
+        if (g_pRaven->IsCurrentlyPopulating())
+        {
+            if (MessageBox(hwnd, "Are you sure you want to quit?", "Data is currently still being populated.", MB_OKCANCEL) == IDOK)
+            {
+                remove("data.rambo");
+                DestroyWindow(hwnd);
+            }
+            return 0;
+        }
+        break;
+    }
 
     case WM_KEYUP:
       {
@@ -256,7 +269,19 @@ LRESULT CALLBACK WindowProc (HWND   hwnd,
 
           break;
 
+      case IDM_NEURALNET_ENABLELP:
 
+          g_pRaven->EnablePopulationOfRambo();
+          ChangeMenuState(hwnd, IDM_NEURALNET_ENABLELP, MFS_DISABLED);
+          ChangeMenuState(hwnd, IDM_NEURALNET_LOAD, MFS_DISABLED);
+          break;
+
+      case IDM_NEURALNET_LOAD:
+
+          g_pRaven->LoadRamboData();
+          ChangeMenuState(hwnd, IDM_NEURALNET_LOAD, MFS_DISABLED);
+          ChangeMenuState(hwnd, IDM_NEURALNET_ENABLELP, MFS_DISABLED);
+          break;
 
       case IDM_NAVIGATION_SHOW_NAVGRAPH:
 
