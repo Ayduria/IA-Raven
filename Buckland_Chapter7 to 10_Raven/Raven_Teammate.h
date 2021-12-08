@@ -18,6 +18,7 @@
 #include "game/MovingEntity.h"
 #include "misc/utils.h"
 #include "Raven_TargetingSystem.h"
+#include "Raven_Map.h"
 
 
 class Raven_PathPlanner;
@@ -33,8 +34,8 @@ class Raven_SensoryMemory;
 
 struct MyPos
 {
-	double x;
-	double y;
+	Vector2D Pos;
+	void* TriggerType;
 };
 
 class Raven_Teammate : public Raven_Bot

@@ -17,20 +17,15 @@
 
 class ScavengeGoal_Evaluator : public Goal_Evaluator
 {
-    bool m_distance;
-    Vector2D m_Pos;
-
-    double CalculateDesirability(Raven_Bot* pBot);
-    void  SetGoal(Raven_Bot* pBot);
 
 public:
 
     ScavengeGoal_Evaluator(double bias) :Goal_Evaluator(bias)
     {}
 
-    double CalculateDesirability(Raven_Bot* pBot, MyPos* pPos);
+    double CalculateDesirability(Raven_Bot* pBot);
 
-    void  SetGoal(Raven_Bot* pBot, MyPos* pPos);
+    void  SetGoal(Raven_Bot* pBot);
 
     void  RenderInfo(Vector2D Position, Raven_Bot* pBot);
 };

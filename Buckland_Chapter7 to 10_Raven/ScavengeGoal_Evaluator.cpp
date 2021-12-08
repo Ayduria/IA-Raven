@@ -7,52 +7,29 @@
 
 #include <string>
 
-
-
-
-//------------------------ CalculateDesirability ------------------------------
-//-----------------------------------------------------------------------------
-double ScavengeGoal_Evaluator::CalculateDesirability(Raven_Bot* pBot, MyPos* pPos)
-{
-	Raven_Map* map = pBot->GetWorld()->GetMap();
-
-	Vector2D Pos = Vector2D(pPos->x, pPos->y);
-
-	Raven_Map::GraphNode botPosition = map->GetClosestNodeIdToPosition(pBot->Pos());
-	Raven_Map::GraphNode InventoryLocation = map->GetClosestNodeIdToPosition(Pos);
-
-	m_distance = map->CalculateCostToTravelBetweenNodes(botPosition.Index(), InventoryLocation.Index());
-	if (m_distance > 150)
-		return 0;
-	else
-		return CalculateDesirability(pBot);
-
-}
-
 //------------------------ CalculateDesirability ------------------------------
 //-----------------------------------------------------------------------------
 double ScavengeGoal_Evaluator::CalculateDesirability(Raven_Bot* pBot)
 {
-	double tweaker = 0.015;
-	double desirability = (150 * m_dCharacterBias * tweaker) / m_distance;
-	Clamp(desirability, 0, 1);
+	double distance = Raven_Feature::DistanceToItem(pBot, type_pack);
+	if (distance > 150)
+		return 0;
+	else
+	{
+		double tweaker = 0.2;
 
-	return desirability;
-}
+		double desirability = (150 * m_dCharacterBias * tweaker) / distance;
+		Clamp(desirability, 0, 1);
 
-//----------------------------- SetGoal ---------------------------------------
-//-----------------------------------------------------------------------------
-void ScavengeGoal_Evaluator::SetGoal(Raven_Bot* pBot, MyPos* pPos)
-{
-	m_Pos = Vector2D(pPos->x, pPos->y);
-	SetGoal(pBot);
+		return desirability;
+	}
 }
 
 //----------------------------- SetGoal ---------------------------------------
 //-----------------------------------------------------------------------------
 void ScavengeGoal_Evaluator::SetGoal(Raven_Bot* pBot)
 {
-	pBot->GetBrain()->AddGoal_Scavenge(m_Pos);
+	pBot->GetBrain()->AddGoal_Scavenge();
 }
 
 //-------------------------- RenderInfo ---------------------------------------

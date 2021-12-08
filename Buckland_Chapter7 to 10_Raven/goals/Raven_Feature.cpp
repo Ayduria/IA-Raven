@@ -26,7 +26,6 @@ double Raven_Feature::DistanceToItem(Raven_Bot* pBot, int ItemType)
   return DistanceToItem / MaxDistance;
 }
 
-
 //----------------------- GetMaxRoundsBotCanCarryForWeapon --------------------
 //
 //  helper function to tidy up IndividualWeapon method

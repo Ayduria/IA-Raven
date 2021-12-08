@@ -4,6 +4,7 @@
 #include "../Raven_ObjectEnumerations.h"
 #include "misc/utils.h"
 #include "../lua/Raven_Scriptor.h"
+#include "Raven_Feature.h"
 
 #include "Goal_MoveToPosition.h"
 #include "../Goal_Scavenge.h"
@@ -36,7 +37,7 @@ Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(
   double RailgunBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
   double ExploreBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
   double AttackBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
-  double ScavengeBias = 1.5; //RandInRange(LowRangeOfBias, HighRangeOfBias);
+  double ScavengeBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
 
   //create the evaluator objects
   m_Evaluators.push_back(new GetHealthGoal_Evaluator(HealthBias));
@@ -49,6 +50,7 @@ Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(
   m_Evaluators.push_back(new GetWeaponGoal_Evaluator(RocketLauncherBias,
                                                      type_rocket_launcher));
   m_Evaluators.push_back(new ScavengeGoal_Evaluator(ScavengeBias));
+
 }
 
 //----------------------------- dtor ------------------------------------------
@@ -110,7 +112,6 @@ void Goal_Think::Arbitrate()
   for (curDes; curDes != m_Evaluators.end(); ++curDes)
   {
     double desirabilty = (*curDes)->CalculateDesirability(m_pOwner);
-
     if (desirabilty >= best)
     {
       best = desirabilty;
@@ -139,9 +140,18 @@ bool Goal_Think::notPresent(unsigned int GoalType)const
   return true;
 }
 
-void Goal_Think::AddGoal_Scavenge(Vector2D pos)
+void Goal_Think::RemovePack(int index) 
 {
-  AddSubgoal(new Goal_Scavenge(m_pOwner, pos));
+    m_scavengeables.erase(m_scavengeables.begin() + index);
+}
+
+void Goal_Think::AddGoal_Scavenge()
+{
+  if (notPresent(goal_scavenge) && this->m_scavengeables.size() > 0)
+  {
+    RemoveAllSubgoals();
+    AddSubgoal(new Goal_Scavenge(m_pOwner, m_scavengeables));
+  }
 }
 
 void Goal_Think::AddGoal_MoveToPosition(Vector2D pos)
@@ -197,12 +207,10 @@ bool Goal_Think::HandleMessage(const Telegram& msg)
         {
             case Msg_HereMyStuff:
             {
-                //clear any existing goals
-                RemoveAllSubgoals();
-                MyPos* pos = (MyPos*)msg.ExtraInfo;
 
-                AddGoal_Scavenge(Vector2D(pos->x, pos->y));
-                return true;
+              MyPos* pos = (MyPos*)msg.ExtraInfo;
+              m_scavengeables.push_back(pos);
+              return true;
             }
         }
     }

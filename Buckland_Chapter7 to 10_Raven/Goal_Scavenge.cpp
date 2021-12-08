@@ -5,7 +5,9 @@
 #include "Raven_Game.h"
 #include "navigation/Raven_PathPlanner.h"
 
+#include "goals/Goal_Think.h"
 #include "goals/Goal_FollowPath.h"
+#include "goals/Goal_SeekToPosition.h"
 
 
 //------------------------------- Activate ------------------------------------
@@ -15,6 +17,16 @@ void Goal_Scavenge::Activate()
 	m_iStatus = active;
 
 	RemoveAllSubgoals();
+	// Pick a random location from the known existing packs
+	m_packToScavenge = RandInt(0, (int) m_vDestinations.size());
+
+	m_pPackLocation = m_vDestinations[m_packToScavenge]->Pos;
+	m_pPack = static_cast<Raven_Map::TriggerType*>(m_vDestinations[m_packToScavenge]->TriggerType);
+
+	if (m_pOwner->GetPathPlanner()->RequestPathToPosition(m_vDestinations[m_packToScavenge]->Pos))
+	{
+		AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_vDestinations[m_packToScavenge]->Pos));
+	}
 }
 
 //------------------------------ Process --------------------------------------
@@ -23,8 +35,19 @@ int Goal_Scavenge::Process()
 {
 	ActivateIfInactive();
 
+	if (packHasBeenStolen())
+	{
+	  // remove a possible place for a pack of raven bot's memory
+	  m_pOwner->GetBrain()->RemovePack(m_packToScavenge);
+	  Terminate();
+	}
+
 	m_iStatus = ProcessSubgoals();
 
+	// look Get Item
+	// If box is not there, TERMINATE
+	// if Box taken by me TERMINATE
+	// Terminate + change bool MustScavenge of GoalThink to false
 	return m_iStatus;
 }
 
@@ -64,6 +87,14 @@ bool Goal_Scavenge::HandleMessage(const Telegram& msg)
 	return true;
 }
 
+bool Goal_Scavenge::packHasBeenStolen()
+{
+	// TODO check if pack still exist
+	return this->m_pPack &&
+		!m_pPack-isActive() &&
+		m_pOwner->hasLOSto(m_pPack->Pos());
+}
+
 void Goal_Scavenge::Render()
 {
 	//forward the request to the subgoals
@@ -72,11 +103,11 @@ void Goal_Scavenge::Render()
 	//draw a bullseye
 	gdi->BlackPen();
 	gdi->BlueBrush();
-	gdi->Circle(m_vDestination, 6);
+	gdi->Circle(m_pPackLocation, 6);
 	gdi->RedBrush();
 	gdi->RedPen();
-	gdi->Circle(m_vDestination, 4);
+	gdi->Circle(m_pPackLocation, 4);
 	gdi->YellowBrush();
 	gdi->YellowPen();
-	gdi->Circle(m_vDestination, 2);
+	gdi->Circle(m_pPackLocation, 2);
 }

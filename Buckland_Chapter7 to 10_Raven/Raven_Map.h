@@ -104,7 +104,7 @@ public:
 
   void      AddSoundTrigger(Raven_Bot* pSoundSource, double range);
 
-  void      AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inventory);
+  Raven_Map::GraphNode AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inventory);
 
   Raven_Map::GraphNode GetClosestNodeIdToPosition(Vector2D position);
 

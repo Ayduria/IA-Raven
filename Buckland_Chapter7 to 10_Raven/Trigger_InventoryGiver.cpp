@@ -8,7 +8,7 @@ Trigger_InventoryGiver::Trigger_InventoryGiver(int id, std::vector<WeaponData*> 
     SetPos(position);
     AddRectangularTriggerRegion(Vector2D(Pos().x + 10, Pos().y), Vector2D(Pos().x, Pos().y + 10));
     SetGraphNodeIndex(nodeIndex);
-
+    SetActive();
     const int NumRocketVerts = 8;
     const Vector2D rip[NumRocketVerts] = { Vector2D(0, 3),
                                          Vector2D(1, 2),
@@ -23,6 +23,8 @@ Trigger_InventoryGiver::Trigger_InventoryGiver(int id, std::vector<WeaponData*> 
     {
         m_vecRLVB.push_back(rip[i]);
     }
+
+    this->SetEntityType(type_pack);
 }
 
 void Trigger_InventoryGiver::Try(Raven_Bot* pBot)
@@ -33,6 +35,7 @@ void Trigger_InventoryGiver::Try(Raven_Bot* pBot)
 		{
 			pBot->GetWeaponSys()->AddWeapon(weaponData);
 		}
+        SetInactive();
         SetToBeRemovedFromGame();
 	}
 }

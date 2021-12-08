@@ -341,7 +341,7 @@ void Raven_Map::PartitionNavGraph()
 //
 //  given the bot that has died, this method adds a inventory trigger
 //-----------------------------------------------------------------------------
-void Raven_Map::AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inventory)
+Raven_Map::GraphNode Raven_Map::AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inventory)
 {
     Raven_Map::GraphNode node = GetClosestNodeIdToPosition(pBot->Pos());
 
@@ -354,6 +354,7 @@ void Raven_Map::AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inv
 
     //register the entity 
     EntityMgr->RegisterEntity(ig);
+    return nodeType;
 }
 
 Raven_Map::GraphNode Raven_Map::GetClosestNodeIdToPosition(Vector2D position)

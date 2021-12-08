@@ -276,12 +276,13 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
       // spawn gun triggers
       if (myStuff.size() != 0)
       {
-        GetWorld()->GetMap()->AddInventory_Giver(this, myStuff);
+        Raven_Map::GraphNode node = GetWorld()->GetMap()->AddInventory_Giver(this, myStuff);
 
         MyPos* pos = new MyPos();
-        pos->x = Pos().x;
-        pos->y = Pos().y;
-
+        pos->Pos = Pos();
+        pos->TriggerType = (void*)node.ExtraInfo();
+        
+        // TODO: Check to only send Node since it also holds it's position
         for (int Id : teammatesIds)
         {
             Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
