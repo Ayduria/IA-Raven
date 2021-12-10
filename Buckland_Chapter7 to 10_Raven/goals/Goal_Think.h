@@ -60,6 +60,8 @@ public:
 
   bool HandleMessage(const Telegram& msg);
 
+  bool HasKnownScavengeables();
+
   //this renders the evaluations (goal scores) at the specified location
   void  RenderEvaluations(int left, int top)const;
   void  Render();

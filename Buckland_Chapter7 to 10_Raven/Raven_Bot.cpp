@@ -279,7 +279,6 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
         Raven_Map::GraphNode node = GetWorld()->GetMap()->AddInventory_Giver(this, myStuff);
 
         MyPos* pos = new MyPos();
-        pos->Pos = Pos();
         pos->TriggerType = (void*)node.ExtraInfo();
         
         // TODO: Check to only send Node since it also holds it's position

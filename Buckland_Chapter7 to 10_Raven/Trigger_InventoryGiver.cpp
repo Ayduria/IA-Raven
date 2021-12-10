@@ -6,7 +6,7 @@ Trigger_InventoryGiver::Trigger_InventoryGiver(int id, std::vector<WeaponData*> 
                                                                                                                                mInventory(inventory)
 {
     SetPos(position);
-    AddRectangularTriggerRegion(Vector2D(Pos().x + 10, Pos().y), Vector2D(Pos().x, Pos().y + 10));
+    AddCircularTriggerRegion(Pos(), script->GetDouble("DefaultGiverTriggerRange"));
     SetGraphNodeIndex(nodeIndex);
     SetActive();
     const int NumRocketVerts = 8;

@@ -17,6 +17,7 @@
 #include "goals/GetHealthGoal_Evaluator.h"
 #include "goals/ExploreGoal_Evaluator.h"
 #include "goals/AttackTargetGoal_Evaluator.h"
+#include "ScavengeGoal_Evaluator.h"
 
 Goal_ThinkTeammate::Goal_ThinkTeammate(Raven_Bot* pBot, int goalType): Goal_Think(pBot, goalType)
 {
@@ -32,6 +33,7 @@ Goal_ThinkTeammate::Goal_ThinkTeammate(Raven_Bot* pBot, int goalType): Goal_Thin
     double RailgunBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
     double ExploreBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
     double AttackBias = 5;
+    double ScavengeBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
 
     //create the evaluator objects
     m_Evaluators.clear();
@@ -44,4 +46,10 @@ Goal_ThinkTeammate::Goal_ThinkTeammate(Raven_Bot* pBot, int goalType): Goal_Thin
         type_rail_gun));
     m_Evaluators.push_back(new GetWeaponGoal_Evaluator(RocketLauncherBias,
         type_rocket_launcher));
+    m_Evaluators.push_back(new ScavengeGoal_Evaluator(ScavengeBias));
+}
+
+bool Goal_ThinkTeammate::HandleMessage(const Telegram& msg) 
+{
+    return Goal_Think::HandleMessage(msg);
 }

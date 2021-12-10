@@ -34,7 +34,6 @@ class Raven_SensoryMemory;
 
 struct MyPos
 {
-	Vector2D Pos;
 	void* TriggerType;
 };
 

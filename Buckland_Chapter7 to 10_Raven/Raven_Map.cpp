@@ -411,7 +411,7 @@ void Raven_Map::UpdateTriggerSystem(std::list<Raven_Bot*>& bots)
 Vector2D Raven_Map::GetRandomNodeLocation()const
 {
   NavGraph::ConstNodeIterator NodeItr(*m_pNavGraph);
-  int RandIndex = RandInt(0, m_pNavGraph->NumActiveNodes()-1);
+  int RandIndex = RandInt(0, m_pNavGraph->NumActiveNodes() - 1);
   const NavGraph::NodeType* pN = NodeItr.begin();
   while (--RandIndex > 0)
   {

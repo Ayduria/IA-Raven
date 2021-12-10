@@ -30,7 +30,7 @@ public:
         std::vector<MyPos*> Scavengeables) :
 
         Goal_Composite<Raven_Bot>(pBot,
-            goal_move_to_position),
+            goal_scavenge),
         m_vDestinations(Scavengeables)
     {}
 

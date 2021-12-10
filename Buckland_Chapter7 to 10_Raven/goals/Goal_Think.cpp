@@ -207,7 +207,6 @@ bool Goal_Think::HandleMessage(const Telegram& msg)
         {
             case Msg_HereMyStuff:
             {
-
               MyPos* pos = (MyPos*)msg.ExtraInfo;
               m_scavengeables.push_back(pos);
               return true;
@@ -215,6 +214,13 @@ bool Goal_Think::HandleMessage(const Telegram& msg)
         }
     }
     return false;
+}
+
+//----------------------- HasKnownScavengeables -------------------------------
+//-----------------------------------------------------------------------------
+bool Goal_Think::HasKnownScavengeables() 
+{
+    return m_scavengeables.size() > 0;
 }
 
 //----------------------- RenderEvaluations -----------------------------------

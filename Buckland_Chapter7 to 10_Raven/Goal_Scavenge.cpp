@@ -8,6 +8,7 @@
 #include "goals/Goal_Think.h"
 #include "goals/Goal_FollowPath.h"
 #include "goals/Goal_SeekToPosition.h"
+#include "goals/Goal_MoveToPosition.h"
 
 
 //------------------------------- Activate ------------------------------------
@@ -18,14 +19,14 @@ void Goal_Scavenge::Activate()
 
 	RemoveAllSubgoals();
 	// Pick a random location from the known existing packs
-	m_packToScavenge = RandInt(0, (int) m_vDestinations.size());
+	m_packToScavenge = RandInt(0, (int) m_vDestinations.size() - 1);
 
-	m_pPackLocation = m_vDestinations[m_packToScavenge]->Pos;
 	m_pPack = static_cast<Raven_Map::TriggerType*>(m_vDestinations[m_packToScavenge]->TriggerType);
+	m_pPackLocation = m_pPack->Pos();
 
-	if (m_pOwner->GetPathPlanner()->RequestPathToPosition(m_vDestinations[m_packToScavenge]->Pos))
+	if (m_pOwner->GetPathPlanner()->RequestPathToPosition(m_pPackLocation))
 	{
-		AddSubgoal(new Goal_SeekToPosition(m_pOwner, m_vDestinations[m_packToScavenge]->Pos));
+		AddSubgoal(new Goal_MoveToPosition(m_pOwner, m_pPackLocation));
 	}
 }
 
@@ -56,10 +57,10 @@ int Goal_Scavenge::Process()
 bool Goal_Scavenge::HandleMessage(const Telegram& msg) 
 {
 	//first, pass the message down the goal hierarchy
-	bool bHandled = ForwardMessageToFrontMostSubgoal(msg);
-
+	//bool bHandled = ForwardMessageToFrontMostSubgoal(msg);
+	return ForwardMessageToFrontMostSubgoal(msg);
 	//if the msg was not handled, test to see if this goal can handle it
-	if (bHandled == false)
+	/*if (bHandled == false)
 	{
 		switch (msg.Msg)
 		{
@@ -84,14 +85,18 @@ bool Goal_Scavenge::HandleMessage(const Telegram& msg)
 	}
 
 	//handled by subgoals
-	return true;
+	return true;*/
 }
 
 bool Goal_Scavenge::packHasBeenStolen()
 {
 	// TODO check if pack still exist
+	bool b1 = this->m_pPack;
+	bool b2 = !m_pPack->isActive();
+	bool b3 = m_pOwner->hasLOSto(m_pPack->Pos());
+
 	return this->m_pPack &&
-		!m_pPack-isActive() &&
+		!m_pPack->isActive() &&
 		m_pOwner->hasLOSto(m_pPack->Pos());
 }
 

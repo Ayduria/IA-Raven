@@ -12,13 +12,13 @@
 double ScavengeGoal_Evaluator::CalculateDesirability(Raven_Bot* pBot)
 {
 	double distance = Raven_Feature::DistanceToItem(pBot, type_pack);
-	if (distance > 150)
+	if (distance > 0.6 || !pBot->GetBrain()->HasKnownScavengeables())
 		return 0;
 	else
 	{
-		double tweaker = 0.2;
+		double tweaker = 0.5;
 
-		double desirability = (150 * m_dCharacterBias * tweaker) / distance;
+		double desirability = (0.6 * m_dCharacterBias * tweaker) / distance;
 		Clamp(desirability, 0, 1);
 
 		return desirability;
