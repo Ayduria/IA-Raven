@@ -16,11 +16,11 @@ enum
   type_rocket_launcher,
   type_shotgun,
   type_blaster,
-  type_pack,
   type_obstacle,
   type_sliding_door,
   type_door_trigger,
-  type_grenade
+  type_grenade,
+  type_pack
 };
 
 
