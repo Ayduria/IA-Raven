@@ -281,7 +281,6 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
         MyPos* pos = new MyPos();
         pos->TriggerType = (void*)node.ExtraInfo();
         
-        // TODO: Check to only send Node since it also holds it's position
         for (int Id : teammatesIds)
         {
             Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,

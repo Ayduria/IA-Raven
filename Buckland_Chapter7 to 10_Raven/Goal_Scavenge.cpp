@@ -45,10 +45,6 @@ int Goal_Scavenge::Process()
 
 	m_iStatus = ProcessSubgoals();
 
-	// look Get Item
-	// If box is not there, TERMINATE
-	// if Box taken by me TERMINATE
-	// Terminate + change bool MustScavenge of GoalThink to false
 	return m_iStatus;
 }
 
@@ -56,36 +52,7 @@ int Goal_Scavenge::Process()
 //-----------------------------------------------------------------------------
 bool Goal_Scavenge::HandleMessage(const Telegram& msg) 
 {
-	//first, pass the message down the goal hierarchy
-	//bool bHandled = ForwardMessageToFrontMostSubgoal(msg);
 	return ForwardMessageToFrontMostSubgoal(msg);
-	//if the msg was not handled, test to see if this goal can handle it
-	/*if (bHandled == false)
-	{
-		switch (msg.Msg)
-		{
-		case Msg_PathReady:
-
-			//clear any existing goals
-			RemoveAllSubgoals();
-			AddSubgoal(new Goal_FollowPath(m_pOwner,
-				m_pOwner->GetPathPlanner()->GetPath()));
-
-			return true; //msg handled
-
-
-		case Msg_NoPathAvailable:
-
-			m_iStatus = failed;
-
-			return true; //msg handled
-
-		default: return false;
-		}
-	}
-
-	//handled by subgoals
-	return true;*/
 }
 
 bool Goal_Scavenge::packHasBeenStolen()
