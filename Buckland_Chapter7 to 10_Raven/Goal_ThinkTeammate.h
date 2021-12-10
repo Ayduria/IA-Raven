@@ -22,6 +22,8 @@ class Goal_ThinkTeammate : public Goal_Think
 {
 public:
 	Goal_ThinkTeammate(Raven_Bot* pBot, int goalType);
+
+	bool HandleMessage(const Telegram& msg);
 };
 
 #endif

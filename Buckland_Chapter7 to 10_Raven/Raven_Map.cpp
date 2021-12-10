@@ -341,11 +341,11 @@ void Raven_Map::PartitionNavGraph()
   }   
 }
 
-//---------------------------- AddIventory_giver ------------------------------
+//---------------------------- AddInventory_giver -----------------------------
 //
 //  given the bot that has died, this method adds a inventory trigger
 //-----------------------------------------------------------------------------
-void Raven_Map::AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inventory)
+Raven_Map::GraphNode Raven_Map::AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inventory)
 {
     Raven_Map::GraphNode node = GetClosestNodeIdToPosition(pBot->Pos());
 
@@ -355,6 +355,10 @@ void Raven_Map::AddInventory_Giver(Raven_Bot* pBot, std::vector<WeaponData*> inv
     NavGraph::NodeType& nodeType = m_pNavGraph->GetNode(ig->GraphNodeIndex());
 
     nodeType.SetExtraInfo(ig);
+
+    //register the entity 
+    EntityMgr->RegisterEntity(ig);
+    return nodeType;
 }
 
 Raven_Map::GraphNode Raven_Map::GetClosestNodeIdToPosition(Vector2D position)
@@ -411,7 +415,7 @@ void Raven_Map::UpdateTriggerSystem(std::list<Raven_Bot*>& bots)
 Vector2D Raven_Map::GetRandomNodeLocation()const
 {
   NavGraph::ConstNodeIterator NodeItr(*m_pNavGraph);
-  int RandIndex = RandInt(0, m_pNavGraph->NumActiveNodes()-1);
+  int RandIndex = RandInt(0, m_pNavGraph->NumActiveNodes() - 1);
   const NavGraph::NodeType* pN = NodeItr.begin();
   while (--RandIndex > 0)
   {

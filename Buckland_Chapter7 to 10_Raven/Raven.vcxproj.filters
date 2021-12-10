@@ -298,6 +298,12 @@
     <ClCompile Include="Projectile_Bomb.cpp">
       <Filter>Game\weapons &amp; projectiles\projectiles</Filter>
     </ClCompile>
+    <ClCompile Include="ScavengeGoal_Evaluator.cpp">
+      <Filter>AI\goals\goal evaluation</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal_Scavenge.cpp">
+      <Filter>AI\goals\composite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raven_Bot.h">
@@ -651,6 +657,12 @@
     </ClInclude>
     <ClInclude Include="Projectile_Bomb.h">
       <Filter>Game\weapons &amp; projectiles\projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="ScavengeGoal_Evaluator.h">
+      <Filter>AI\goals\goal evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal_Scavenge.h">
+      <Filter>AI\goals\composite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

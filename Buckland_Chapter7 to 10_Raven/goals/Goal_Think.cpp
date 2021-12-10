@@ -4,19 +4,23 @@
 #include "../Raven_ObjectEnumerations.h"
 #include "misc/utils.h"
 #include "../lua/Raven_Scriptor.h"
+#include "Raven_Feature.h"
 
 #include "Goal_MoveToPosition.h"
+#include "../Goal_Scavenge.h"
 #include "Goal_Explore.h"
 #include "Goal_GetItem.h"
 #include "Goal_Wander.h"
 #include "Raven_Goal_Types.h"
 #include "Goal_AttackTarget.h"
-
+#include "Messaging/Telegram.h"
+#include "..\Raven_Messages.h"
 
 #include "GetWeaponGoal_Evaluator.h"
 #include "GetHealthGoal_Evaluator.h"
 #include "ExploreGoal_Evaluator.h"
 #include "AttackTargetGoal_Evaluator.h"
+#include "../ScavengeGoal_Evaluator.h"
 
 
 Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(pBot, goalType)
@@ -34,6 +38,7 @@ Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(
   double GrenadeBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
   double ExploreBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
   double AttackBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
+  double ScavengeBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
 
   //create the evaluator objects
   m_Evaluators.push_back(new GetHealthGoal_Evaluator(HealthBias));
@@ -45,6 +50,8 @@ Goal_Think::Goal_Think(Raven_Bot* pBot, int goalType):Goal_Composite<Raven_Bot>(
                                                      type_rail_gun));
   m_Evaluators.push_back(new GetWeaponGoal_Evaluator(RocketLauncherBias,
                                                      type_rocket_launcher));
+  m_Evaluators.push_back(new ScavengeGoal_Evaluator(ScavengeBias));
+
   m_Evaluators.push_back(new GetWeaponGoal_Evaluator(GrenadeBias,
                                                      type_grenade));
 }
@@ -108,7 +115,6 @@ void Goal_Think::Arbitrate()
   for (curDes; curDes != m_Evaluators.end(); ++curDes)
   {
     double desirabilty = (*curDes)->CalculateDesirability(m_pOwner);
-
     if (desirabilty >= best)
     {
       best = desirabilty;
@@ -135,6 +141,20 @@ bool Goal_Think::notPresent(unsigned int GoalType)const
   }
 
   return true;
+}
+
+void Goal_Think::RemovePack(int index) 
+{
+    m_scavengeables.erase(m_scavengeables.begin() + index);
+}
+
+void Goal_Think::AddGoal_Scavenge()
+{
+  if (notPresent(goal_scavenge) && this->m_scavengeables.size() > 0)
+  {
+    RemoveAllSubgoals();
+    AddSubgoal(new Goal_Scavenge(m_pOwner, m_scavengeables));
+  }
 }
 
 void Goal_Think::AddGoal_MoveToPosition(Vector2D pos)
@@ -176,7 +196,35 @@ void Goal_Think::QueueGoal_MoveToPosition(Vector2D pos)
    m_SubGoals.push_back(new Goal_MoveToPosition(m_pOwner, pos));
 }
 
+bool Goal_Think::HandleMessage(const Telegram& msg) 
+{
+    // first, pass the message down the goal hierarchy
+    // I do know goal think is the parent of all goals, but it 
+    // could change in a distant future...
+    bool bHandled = ForwardMessageToFrontMostSubgoal(msg);
 
+    // if the msg was not handled, test to see if this goal can handle it
+    if (bHandled == false)
+    {
+        switch (msg.Msg)
+        {
+            case Msg_HereMyStuff:
+            {
+              MyPos* pos = (MyPos*)msg.ExtraInfo;
+              m_scavengeables.push_back(pos);
+              return true;
+            }
+        }
+    }
+    return false;
+}
+
+//----------------------- HasKnownScavengeables -------------------------------
+//-----------------------------------------------------------------------------
+bool Goal_Think::HasKnownScavengeables() 
+{
+    return m_scavengeables.size() > 0;
+}
 
 //----------------------- RenderEvaluations -----------------------------------
 //-----------------------------------------------------------------------------

@@ -282,12 +282,11 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
       // spawn gun triggers
       if (myStuff.size() != 0)
       {
-        GetWorld()->GetMap()->AddInventory_Giver(this, myStuff);
+        Raven_Map::GraphNode node = GetWorld()->GetMap()->AddInventory_Giver(this, myStuff);
 
         MyPos* pos = new MyPos();
-        pos->x = Pos().x;
-        pos->y = Pos().y;
-
+        pos->TriggerType = (void*)node.ExtraInfo();
+        
         for (int Id : teammatesIds)
         {
             Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
@@ -309,14 +308,6 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
     m_pTargSys->ClearTarget();
 
     return true;
-
-  case Msg_HereMyStuff:
-  {
-      MyPos* pos = (MyPos*)msg.ExtraInfo;
-      // TODO add another evaluator for inventory
-      GetBrain()->AddGoal_MoveToPosition(Vector2D(pos->x, pos->y));
-      return true;
-  }
 
   case Msg_GunshotSound:
 

@@ -14,9 +14,8 @@
 #include <string>
 #include "2d/Vector2D.h"
 #include "Goals/Goal_Composite.h"
-#include "../Raven_Bot.h"
 #include "Goal_Evaluator.h"
-
+#include "../Raven_Teammate.h"
 
 
 class Goal_Think : public Goal_Composite<Raven_Bot>
@@ -24,6 +23,7 @@ class Goal_Think : public Goal_Composite<Raven_Bot>
 private:
   
   typedef std::vector<Goal_Evaluator*>   GoalEvaluators;
+  std::vector<MyPos*>					 m_scavengeables;
 
 protected:
   
@@ -41,6 +41,8 @@ public:
   //returns true if the given goal is not at the front of the subgoal list
   bool notPresent(unsigned int GoalType)const;
 
+  void RemovePack(int index);
+
   //the usual suspects
   int  Process();
   void Activate();
@@ -48,6 +50,7 @@ public:
   
   //top level goal types
   void AddGoal_MoveToPosition(Vector2D pos);
+  void AddGoal_Scavenge();
   void AddGoal_GetItem(unsigned int ItemType);
   void AddGoal_Explore();
   void AddGoal_AttackTarget();
@@ -55,10 +58,13 @@ public:
   //this adds the MoveToPosition goal to the *back* of the subgoal list.
   void QueueGoal_MoveToPosition(Vector2D pos);
 
+  bool HandleMessage(const Telegram& msg);
+
+  bool HasKnownScavengeables();
+
   //this renders the evaluations (goal scores) at the specified location
   void  RenderEvaluations(int left, int top)const;
   void  Render();
-
 
 };
 

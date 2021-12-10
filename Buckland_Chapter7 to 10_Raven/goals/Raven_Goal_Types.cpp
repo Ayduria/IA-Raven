@@ -43,6 +43,10 @@ std::string GoalTypeToString::Convert(int gt)
 
     return "move_to_position";
 
+  case goal_scavenge:
+
+    return "scavenge";
+
   case goal_get_health:
 
     return "get_health";

@@ -219,6 +219,7 @@
     <ClCompile Include="Goal_Flee.cpp" />
     <ClCompile Include="CData.cpp" />
     <ClCompile Include="CNeuralNet.cpp" />
+    <ClCompile Include="Goal_Scavenge.cpp" />
     <ClCompile Include="Goal_ThinkTeammate.cpp" />
     <ClCompile Include="LearningBot.cpp" />
     <ClCompile Include="main.cpp">
@@ -478,6 +479,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='boundschecker|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="ScavengeGoal_Evaluator.cpp" />
     <ClCompile Include="triggers\Trigger_HealthGiver.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -542,6 +544,8 @@
     <ClCompile Include="Weapon_Grenade.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Goal_Flee.h" />
+    <ClInclude Include="Goal_Scavenge.h" />
     <ClInclude Include="Goal_ThinkTeammate.h" />
     <ClInclude Include="LearningBot.h" />
     <ClInclude Include="Projectile_Bomb.h" />
@@ -630,6 +634,7 @@
     <ClInclude Include="..\Common\Messaging\Telegram.h" />
     <ClInclude Include="Raven_SensoryMemory.h" />
     <ClInclude Include="..\Common\Triggers\Trigger.h" />
+    <ClInclude Include="ScavengeGoal_Evaluator.h" />
     <ClInclude Include="triggers\Trigger_HealthGiver.h" />
     <ClInclude Include="..\Common\Triggers\Trigger_LimitedLifeTime.h" />
     <ClInclude Include="triggers\Trigger_OnButtonSendMsg.h" />

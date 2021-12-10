@@ -17,7 +17,7 @@
 
 class GetWeaponGoal_Evaluator : public Goal_Evaluator
 { 
-  int   m_iWeaponType;
+  int  m_iWeaponType;
 
 public:
 
