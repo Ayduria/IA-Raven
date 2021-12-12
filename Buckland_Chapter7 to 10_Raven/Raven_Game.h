@@ -84,7 +84,7 @@ private:
 
   bool                             m_hasReadDataFile = false;
 
-  int                              m_totalDataCount = 300;
+  int                              m_totalDataCount = 500;
 
   bool                             m_loadRamboData = false;
 

@@ -19,7 +19,8 @@ void Goal_Scavenge::Activate()
 
 	RemoveAllSubgoals();
 	// Pick a random location from the known existing packs
-	m_packToScavenge = RandInt(0, (int) m_vDestinations.size() - 1);
+	//m_packToScavenge = RandInt(0, (int) m_vDestinations.size() - 1);
+	m_packToScavenge = 0;
 
 	m_pPack = static_cast<Raven_Map::TriggerType*>(m_vDestinations[m_packToScavenge]->TriggerType);
 	m_pPackLocation = m_pPack->Pos();
@@ -57,11 +58,6 @@ bool Goal_Scavenge::HandleMessage(const Telegram& msg)
 
 bool Goal_Scavenge::packHasBeenStolen()
 {
-	// TODO check if pack still exist
-	bool b1 = this->m_pPack;
-	bool b2 = !m_pPack->isActive();
-	bool b3 = m_pOwner->hasLOSto(m_pPack->Pos());
-
 	return this->m_pPack &&
 		!m_pPack->isActive() &&
 		m_pOwner->hasLOSto(m_pPack->Pos());
